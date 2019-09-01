@@ -1,0 +1,118 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - master
+                - production
+                - staging
+
+jobs:
+  test:
+    docker:
+      # specify the version you desire here
+      - image: circleci/ruby:2.6.3-node-browsers
+        environment:
+          COVERAGE: true
+          BUNDLE_VERSION: 2.0.2
+          BUNDLE_GEMFILE: Gemfile
+          BUNDLE_WITHOUT: "production:staging:development"
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          RACK_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: ubuntu
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      - image: circleci/postgres:alpine-ram
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: <APP_NAME>_test
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Bundler 2
+          command: gem install bundler
+
+      # Download and cache dependencies
+      - restore_cache:
+          name: Restore Bundler Cache
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Install Bundler Dependencies
+          command: bin/bundle check --path vendor/bundle || bin/bundle install --deployment
+
+      - save_cache:
+          name: Save Bundler Cache
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: bin/rails db:schema:load
+      - run: bin/rails test
+
+      # collect reports
+      - store_test_results:
+          path: ./test/reports/
+      - store_artifacts:
+          path: ./coverage
+  lint:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+        environment:
+          DISABLE_SPRING: 1
+          BUNDLE_GEMFILE: Gemfile.tools
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle-tools
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Bundler 2
+          command: gem install bundler
+
+      - restore_cache:
+          keys:
+            - v1-tools-dependencies-{{ checksum "Gemfile.tools.lock" }}
+            - v1-tools-dependencies-
+
+      - run:
+          name: Install cmake for building pronto dependencies
+          command: sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
+
+      - run:
+          name: Install Bundle Dependencies
+          command: bin/bundle check --path vendor/bundle-tools || bin/bundle install --path vendor/bundle-tools
+
+      - run:
+          name: Install Node Packages
+          command: bin/yarn
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle-tools
+          key: v1-tools-dependencies-{{ checksum "Gemfile.tools.lock" }}
+
+      - run: bin/lint-github-pr
+

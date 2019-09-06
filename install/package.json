@@ -1,0 +1,21 @@
+{
+  "name": "jt-tools",
+  "version": "1.0.0",
+  "repository": "git@github.com:jetthoughts/jt-tools.git",
+  "author": "Paul Keen <pftg@noreply.github.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "resolutions": {
+    "debug": "4.1.1",
+    "doctrine": "3.0.0",
+    "strip-ansi": "5.2.0",
+    "ms": "2.1.2",
+    "string-width": "3.1.0",
+    "ansi-regex": "4.1.0"
+  }
+}

@@ -1,4 +1,5 @@
 *.rbc
+*.lock
 capybara-*.html
 .rspec
 /log
@@ -24,8 +25,9 @@ config/master.key
 .env
 
 ## Environment normalization:
-/.bundle
-/vendor/bundle
+*/bin/bundle
+*/.bundle
+*/vendor/bundle
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset

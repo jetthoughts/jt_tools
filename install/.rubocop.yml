@@ -1,0 +1,116 @@
+---
+require:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - 'db/schema.rb'
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: symmetrical
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Naming/PredicateName:
+  Exclude:
+    - 'app/helpers/application_helper.rb'
+
+Metrics/AbcSize:
+  Max: 25
+  Exclude:
+    - test/**/*.rb
+
+Metrics/LineLength:
+  Max: 113
+
+Metrics/ClassLength:
+  # TODO: enable as soon as we will deliver production
+  Enabled: false
+  CountComments: false
+  Exclude:
+    - 'test/**/*.rb'
+
+Metrics/MethodLength:
+  # TODO: enable as soon as we will deliver production
+  Enabled: false
+  CountComments: false
+  Exclude:
+    - 'test/**/*.rb'
+
+Metrics/ModuleLength:
+  CountComments: false
+  Exclude:
+    - 'test/**/*.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/**/*.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/StabbyLambdaParentheses:
+  EnforcedStyle: require_no_parentheses
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/schema.rb'
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
+
+# Rails
+
+Rails:
+  Enabled: true
+
+Rails/DynamicFindBy:
+  # Problems with non ActiveRecord models should be excluded by ignore list
+  Enabled: true
+Rails/HasAndBelongsToMany:
+  Enabled: false
+Rails/Output:
+  Enabled: false
+Rails/OutputSafety:
+  Enabled: false
+Rails/SkipsModelValidations:
+  Blacklist: []
+Rails/TimeZone:
+  Enabled: false
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - production
+    - staging
+    - test

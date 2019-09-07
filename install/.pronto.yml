@@ -21,6 +21,8 @@ flay:
   exclude:
     - test/**/*
 
+format: "%{runner} %{level} %{msg}"
+
 max_warnings: 10
 verbose: true
 warnings_per_review: 5

@@ -12,14 +12,5 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2"
-  },
-  "resolutions": {
-    "debug": "4.1.1",
-    "doctrine": "3.0.0",
-    "strip-ansi": "5.2.0",
-    "ms": "2.1.2",
-    "ansi-regex": "4.1.0",
-    "semver": "6.3.0",
-    "string-width": "3.1.0"
   }
 }

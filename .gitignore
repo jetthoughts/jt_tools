@@ -53,3 +53,5 @@ node_modules/
 
 .circleci/
 lib/install/.bundle/
+
+pkg

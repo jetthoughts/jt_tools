@@ -1,0 +1,3 @@
+#!/bin/sh
+
+BUNDLE_GEMFILE=Gemfile.tools bundle update --jobs=4 --retry=3

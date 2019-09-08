@@ -26,7 +26,7 @@ config/master.key
 
 ## Environment normalization:
 */bin/bundle
-*/.bundle
+.bundle
 */vendor/bundle
 
 # these should all be checked in to normalize the environment:
@@ -51,3 +51,5 @@ bower.json
 # Ignore node_modules
 node_modules/
 
+.circleci/
+lib/install/.bundle/

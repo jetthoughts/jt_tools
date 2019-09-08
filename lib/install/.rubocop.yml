@@ -4,10 +4,15 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.6.4
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/**/*'
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
 
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
@@ -33,7 +38,6 @@ Naming/PredicateName:
     - 'app/helpers/application_helper.rb'
 
 Metrics/AbcSize:
-  Max: 25
   Exclude:
     - test/**/*.rb
 
@@ -41,15 +45,11 @@ Metrics/LineLength:
   Max: 113
 
 Metrics/ClassLength:
-  # TODO: enable as soon as we will deliver production
-  Enabled: false
   CountComments: false
   Exclude:
     - 'test/**/*.rb'
 
 Metrics/MethodLength:
-  # TODO: enable as soon as we will deliver production
-  Enabled: false
   CountComments: false
   Exclude:
     - 'test/**/*.rb'
@@ -60,7 +60,7 @@ Metrics/ModuleLength:
     - 'test/**/*.rb'
 
 Naming/MemoizedInstanceVariableName:
-  Enabled: false
+  EnforcedStyleForLeadingUnderscores: required
 
 Style/ClassAndModuleChildren:
   Exclude:
@@ -85,29 +85,17 @@ Style/StringLiterals:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
-Layout/AlignHash:
-  EnforcedHashRocketStyle: key
-  EnforcedColonStyle: key
-  EnforcedLastArgumentHashStyle: always_inspect
-
 # Rails
 
 Rails:
   Enabled: true
 
-Rails/DynamicFindBy:
-  # Problems with non ActiveRecord models should be excluded by ignore list
-  Enabled: true
 Rails/HasAndBelongsToMany:
   Enabled: false
-Rails/Output:
-  Enabled: false
-Rails/OutputSafety:
-  Enabled: false
+
 Rails/SkipsModelValidations:
   Blacklist: []
-Rails/TimeZone:
-  Enabled: false
+
 Rails/UnknownEnv:
   Environments:
     - development

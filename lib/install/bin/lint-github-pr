@@ -10,5 +10,5 @@ then
   reporters_opt="-f github_status github_pr_review -c origin/master --exit-code"
 fi
 
-BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec pronto run  -c origin/develop $reporters_opt --exit-code $@
+BUNDLE_GEMFILE=Gemfile.tools bundle exec pronto run -c origin/master $reporters_opt --exit-code $@
 

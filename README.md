@@ -1,4 +1,4 @@
-# JT::Tools
+# JtTools
 
 ## Installation
 

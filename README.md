@@ -5,7 +5,7 @@
 To install remotely:
 
 ```bash
-rails app:template LOCATION=https://raw.githubusercontent.com/jetthoughts/jt_tools/master/template.rb
+rails app:template LOCATION=https://raw.githubusercontent.com/jetthoughts/jt_tools/master/lib/install/template.rb
 ```
 
 Add this line to your application's Gemfile:

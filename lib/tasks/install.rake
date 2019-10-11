@@ -1,4 +1,4 @@
-install_template_path = File.expand_path('../install/template.rb', __dir__).freeze
+install_template_path = File.expand_path('../../template.rb', __dir__).freeze
 bin_path = ENV['BUNDLE_BIN'] || './bin'
 
 namespace :jt_tools do

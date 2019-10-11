@@ -2,6 +2,12 @@
 
 ## Installation
 
+To install remotely:
+
+```bash
+rails app:template LOCATION=https://raw.githubusercontent.com/jetthoughts/jt_tools/master/template.rb
+```
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -12,6 +18,7 @@ And then execute:
 
     $ bundle
     $ bin/rails jt_tools:install
+
 
 ## Usage
 

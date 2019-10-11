@@ -38,7 +38,7 @@ say 'Setup default bundle parallel jobs to 4'
 run 'bundle config jobs 4'
 
 say 'Copying tools gemfile'
-copy_file "#{source_paths.first}/Gemfile.tools", 'Gemfile.tools'
+copy_file "#{source_paths.first}/lib/install/Gemfile.tools", 'Gemfile.tools'
 
 run 'yarn add -D eslint eslint-config-airbnb-base \
   eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier'
@@ -50,18 +50,18 @@ run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
 
 say 'Copying lint configurations'
 
-copy_file "#{source_paths.first}/.better-html.yml", '.better-html.yml'
-copy_file "#{source_paths.first}/.erb-lint.yml", '.erb-lint.yml'
-copy_file "#{source_paths.first}/.eslintrc.js", '.eslintrc.js'
-copy_file "#{source_paths.first}/.prettierrc", '.prettierrc'
-copy_file "#{source_paths.first}/.pronto.yml", '.pronto.yml'
-copy_file "#{source_paths.first}/.pronto_eslint_npm.yml", '.pronto_eslint_npm.yml'
-copy_file "#{source_paths.first}/.rubocop.yml", '.rubocop.yml'
-copy_file "#{source_paths.first}/.yamllint", '.yamllint'
+copy_file "#{source_paths.first}/lib/install/.better-html.yml", '.better-html.yml'
+copy_file "#{source_paths.first}/lib/install/.erb-lint.yml", '.erb-lint.yml'
+copy_file "#{source_paths.first}/lib/install/.eslintrc.js", '.eslintrc.js'
+copy_file "#{source_paths.first}/lib/install/.prettierrc", '.prettierrc'
+copy_file "#{source_paths.first}/lib/install/.pronto.yml", '.pronto.yml'
+copy_file "#{source_paths.first}/lib/install/.pronto_eslint_npm.yml", '.pronto_eslint_npm.yml'
+copy_file "#{source_paths.first}/lib/install/.rubocop.yml", '.rubocop.yml'
+copy_file "#{source_paths.first}/lib/install/.yamllint", '.yamllint'
 
 say 'Copying circleci configuration'
-directory "#{source_paths.first}/.circleci", '.circleci'
+directory "#{source_paths.first}/lib/install/.circleci", '.circleci'
 
 say 'Copying heroku configuration'
-copy_file "#{source_paths.first}/app.json", 'app.json'
-copy_file "#{source_paths.first}/Procfile", 'Procfile'
+copy_file "#{source_paths.first}/lib/install/app.json", 'app.json'
+copy_file "#{source_paths.first}/lib/install/Procfile", 'Procfile'

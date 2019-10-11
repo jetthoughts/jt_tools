@@ -20,7 +20,7 @@ def add_template_repository_to_source_path
       Dir.chdir(tempdir) { git checkout: branch }
     end
   else
-    source_paths.unshift(File.dirname(__FILE__))
+    source_paths.unshift(__dir__)
   end
 end
 

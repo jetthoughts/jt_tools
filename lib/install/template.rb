@@ -30,7 +30,7 @@ gem_group :development do
 end
 
 say 'Copying binstubs'
-directory File.join(File.dirname(__FILE__), '/bin'), 'bin'
+directory "#{source_paths.first}/lib/install/bin", 'bin'
 
 chmod 'bin', 0o755 & ~File.umask, verbose: false
 

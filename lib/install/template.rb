@@ -38,7 +38,7 @@ say 'Setup default bundle parallel jobs to 4'
 run 'bundle config jobs 4'
 
 say 'Copying tools gemfile'
-copy_file "#{__dir__}/Gemfile.tools", 'Gemfile.tools'
+copy_file "#{source_paths.first}/Gemfile.tools", 'Gemfile.tools'
 
 run 'yarn add -D eslint eslint-config-airbnb-base \
   eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier'
@@ -50,18 +50,18 @@ run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
 
 say 'Copying lint configurations'
 
-copy_file "#{__dir__}/.better-html.yml", '.better-html.yml'
-copy_file "#{__dir__}/.erb-lint.yml", '.erb-lint.yml'
-copy_file "#{__dir__}/.eslintrc.js", '.eslintrc.js'
-copy_file "#{__dir__}/.prettierrc", '.prettierrc'
-copy_file "#{__dir__}/.pronto.yml", '.pronto.yml'
-copy_file "#{__dir__}/.pronto_eslint_npm.yml", '.pronto_eslint_npm.yml'
-copy_file "#{__dir__}/.rubocop.yml", '.rubocop.yml'
-copy_file "#{__dir__}/.yamllint", '.yamllint'
+copy_file "#{source_paths.first}/.better-html.yml", '.better-html.yml'
+copy_file "#{source_paths.first}/.erb-lint.yml", '.erb-lint.yml'
+copy_file "#{source_paths.first}/.eslintrc.js", '.eslintrc.js'
+copy_file "#{source_paths.first}/.prettierrc", '.prettierrc'
+copy_file "#{source_paths.first}/.pronto.yml", '.pronto.yml'
+copy_file "#{source_paths.first}/.pronto_eslint_npm.yml", '.pronto_eslint_npm.yml'
+copy_file "#{source_paths.first}/.rubocop.yml", '.rubocop.yml'
+copy_file "#{source_paths.first}/.yamllint", '.yamllint'
 
 say 'Copying circleci configuration'
-directory "#{__dir__}/.circleci", '.circleci'
+directory "#{source_paths.first}/.circleci", '.circleci'
 
 say 'Copying heroku configuration'
-copy_file "#{__dir__}/app.json", 'app.json'
-copy_file "#{__dir__}/Procfile", 'Procfile'
+copy_file "#{source_paths.first}/app.json", 'app.json'
+copy_file "#{source_paths.first}/Procfile", 'Procfile'

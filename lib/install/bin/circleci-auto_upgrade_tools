@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+readonly token=$GITHUB_TOKEN
+
+echo "-----Create and switch to new branch-----"
+
+current_date=`date +"%Y%m%d%H%M"`
+new_branch_name="auto-upgrade-tools-dependencies-${current_date}"
+git checkout -b $new_branch_name
+
+echo "-----Run Gemfile.tools update-----"
+
+if bin/bundle.tools update; then
+  echo 'Updated successfully'
+
+  git config user.name "jt-tools-deployments"
+  git config user.email "circleci.bot@example.com"
+
+  git commit -am "Upgrades Gemfile.tools dependencies"
+  git push https://$token@github.com/pubnative/pnd.git -f
+
+  curl -H "Authorization: token ${token}" -X POST -d \
+    "{\"title\":\"Upgrade tools dependencies\",\"base\":\"master\", \"head\":\"pubnative:${new_branch_name}\"}" \
+    https://api.github.com/repos/pubnative/pnd/pulls
+  exit 0
+else
+  echo 'Failed to update\n'
+  exit 1
+fi

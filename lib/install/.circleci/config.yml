@@ -32,7 +32,7 @@ jobs:
   test:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.6.4-node-browsers
+      - image: circleci/ruby:2.6-node-browsers
         environment:
           COVERAGE: true
           BUNDLE_GEMFILE: Gemfile
@@ -84,7 +84,7 @@ jobs:
           path: ./coverage
   lint:
     docker:
-      - image: circleci/ruby:2.6.4-stretch-node
+      - image: circleci/ruby:2.6-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
@@ -121,17 +121,22 @@ jobs:
 
   upgrade_tools:
     docker:
-      - image: circleci/ruby:2.6.4-stretch-node
+      - image: circleci/ruby:2.6-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
+
+          # Provide values for current repository
+          REPOSITORY_OWNER: jetthoughts
+          REPOSITORY_TITLE: jt_tools
+
     steps:
       - checkout
 
       - run:
-          name: Instll Bundler
+          name: Install Bundler
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.tools.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV

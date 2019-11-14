@@ -2,8 +2,9 @@
 
 set -e
 
-# GITHUB_TOKEN should be stored in CircleCI Environment Variables
-readonly token=$GITHUB_TOKEN
+# Before running this script, make sure that you define
+# GITHUB_TOKEN, REPOSITORY_OWNER, REPOSITORY_TITLE
+# in CircleCI Environment Variables
 
 echo "-----Create and switch to new branch-----"
 
@@ -20,11 +21,11 @@ if bin/bundle.tools update; then
   git config user.email "circleci.bot@example.com"
 
   git commit -am "Upgrades Gemfile.tools dependencies"
-  git push https://$token@github.com/jetthoughts/jt_tools.git -f
+  git push https://$GITHUB_TOKEN@github.com/$REPOSITORY_OWNER/$REPOSITORY_TITLE.git -f
 
-  curl -H "Authorization: token ${token}" -X POST -d \
-    "{\"title\":\"Upgrade tools dependencies\",\"base\":\"master\", \"head\":\"jetthoughts:${new_branch_name}\"}" \
-    https://api.github.com/repos/jetthoughts/jt_tools/pulls
+  curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST -d \
+    "{\"title\":\"Upgrade tools dependencies\",\"base\":\"master\", \"head\":\"${REPOSITORY_OWNER}:${new_branch_name}\"}" \
+    https://api.github.com/repos/$REPOSITORY_OWNER/$REPOSITORY_TITLE/pulls
   exit 0
 else
   echo 'Failed to update\n'

@@ -2,10 +2,6 @@
 
 set -e
 
-# Before running this script, make sure that you define
-# GITHUB_TOKEN, REPOSITORY_OWNER, REPOSITORY_TITLE
-# in CircleCI Environment Variables
-
 echo "-----Create and switch to new branch-----"
 
 current_date=`date +"%Y%m%d%H%M"`
@@ -21,11 +17,12 @@ if bin/bundle.tools update; then
   git config user.email "circleci.bot@example.com"
 
   git commit -am "Upgrades Gemfile.tools dependencies"
-  git push https://$GITHUB_TOKEN@github.com/$REPOSITORY_OWNER/$REPOSITORY_TITLE.git -f
+  git push https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -f
 
-  curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST -d \
-    "{\"title\":\"Upgrade tools dependencies\",\"base\":\"master\", \"head\":\"${REPOSITORY_OWNER}:${new_branch_name}\"}" \
-    https://api.github.com/repos/$REPOSITORY_OWNER/$REPOSITORY_TITLE/pulls
+  curl -X POST                                                                                                  \
+    -H "Authorization: token ${GITHUB_TOKEN}"                                                                   \
+    -d '{"title":"Upgrade tools dependencies","base":"master","head":"'$CIRCLE_PROJECT_USERNAME':'$new_branch_name'"}' \
+    https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls
   exit 0
 else
   echo 'Failed to update\n'

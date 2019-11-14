@@ -63,6 +63,11 @@ copy_file 'lib/install/.yamllint', '.yamllint'
 say 'Copying circleci configuration'
 directory 'lib/install/.circleci', '.circleci'
 
+say '-------------------------------------------------------------'
+say 'For running auto-update of Gemfile.tools with CircleCI,'
+say 'please, provide GITHUB_TOKEN environment variable in CircleCI'
+say '-------------------------------------------------------------'
+
 say 'Copying heroku configuration'
 copy_file 'lib/install/app.json', 'app.json'
 copy_file 'lib/install/Procfile', 'Procfile'

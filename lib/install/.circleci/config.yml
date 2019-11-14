@@ -28,6 +28,7 @@ workflows:
                 - master
     jobs:
       - upgrade_tools
+
 jobs:
   test:
     docker:
@@ -127,10 +128,6 @@ jobs:
           BUNDLE_GEMFILE: Gemfile.tools
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
-
-          # Provide values for current repository
-          REPOSITORY_OWNER: jetthoughts
-          REPOSITORY_TITLE: jt_tools
 
     steps:
       - checkout

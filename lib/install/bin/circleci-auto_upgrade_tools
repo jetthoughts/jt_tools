@@ -10,7 +10,7 @@ git checkout -b $new_branch_name
 
 echo "-----Run Gemfile.tools update-----"
 
-if bin/bundle.tools update; then
+if bin/tools-upgrade; then
   echo 'Updated successfully'
 
   git config user.name "jt-tools-deployments"

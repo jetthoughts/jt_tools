@@ -139,6 +139,8 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
+      - run: sudo apt-get install cmake
+
       - run:
           name: Run Gemfile tools update in separate branch
           command: |

@@ -2,8 +2,6 @@
 
 set -e
 
-readonly token=$GITHUB_TOKEN
-
 echo "-----Create and switch to new branch-----"
 
 current_date=`date +"%Y%m%d%H%M"`
@@ -12,18 +10,19 @@ git checkout -b $new_branch_name
 
 echo "-----Run Gemfile.tools update-----"
 
-if bin/bundle.tools update; then
+if bin/tools-upgrade; then
   echo 'Updated successfully'
 
   git config user.name "jt-tools-deployments"
   git config user.email "circleci.bot@example.com"
 
   git commit -am "Upgrades Gemfile.tools dependencies"
-  git push https://$token@github.com/pubnative/pnd.git -f
+  git push https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -f
 
-  curl -H "Authorization: token ${token}" -X POST -d \
-    "{\"title\":\"Upgrade tools dependencies\",\"base\":\"master\", \"head\":\"pubnative:${new_branch_name}\"}" \
-    https://api.github.com/repos/pubnative/pnd/pulls
+  curl -X POST                                                                                                  \
+    -H "Authorization: token ${GITHUB_TOKEN}"                                                                   \
+    -d '{"title":"Upgrade tools dependencies","base":"master","head":"'$CIRCLE_PROJECT_USERNAME':'$new_branch_name'"}' \
+    https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls
   exit 0
 else
   echo 'Failed to update\n'

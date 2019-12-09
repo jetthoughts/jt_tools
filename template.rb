@@ -50,7 +50,6 @@ run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub pronto'
 run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
 
 say 'Copying lint configurations'
-
 copy_file 'lib/install/.better-html.yml', '.better-html.yml'
 copy_file 'lib/install/.erb-lint.yml', '.erb-lint.yml'
 copy_file 'lib/install/.eslintrc.js', '.eslintrc.js'
@@ -59,9 +58,10 @@ copy_file 'lib/install/.pronto.yml', '.pronto.yml'
 copy_file 'lib/install/.pronto_eslint_npm.yml', '.pronto_eslint_npm.yml'
 copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
 copy_file 'lib/install/.yamllint', '.yamllint'
-copy_file 'lib/install/Brewfile', 'Brewfile'
+copy_file 'lib/install/.reek.yml', '.reek.yml'
 
-say 'Copying circleci configuration'
+
+say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'
 directory 'lib/install/.dependabot', '.dependabot'
 
@@ -74,8 +74,6 @@ say 'Copying heroku configuration'
 copy_file 'lib/install/app.json', 'app.json'
 copy_file 'lib/install/Procfile', 'Procfile'
 
-run <<~INSATLL_BREW_DEPS
-  if hash brew 2>/dev/null; then                                                                                                        [21:33:49]
-    brew bundle
-  fi
-INSATLL_BREW_DEPS
+say 'Install Brew dependencies'
+copy_file 'lib/install/Brewfile', 'Brewfile'
+run 'hash brew 2>/dev/null && brew bundle'

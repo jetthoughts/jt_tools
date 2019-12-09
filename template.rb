@@ -59,15 +59,23 @@ copy_file 'lib/install/.pronto.yml', '.pronto.yml'
 copy_file 'lib/install/.pronto_eslint_npm.yml', '.pronto_eslint_npm.yml'
 copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
 copy_file 'lib/install/.yamllint', '.yamllint'
+copy_file 'lib/install/Brewfile', 'Brewfile'
 
 say 'Copying circleci configuration'
 directory 'lib/install/.circleci', '.circleci'
+directory 'lib/install/.dependabot', '.dependabot'
 
 say '------------------------------------------------------------------'
 say 'For running Pronto and auto-update of Gemfile.tools with CircleCI,'
-say 'please, provide GITHUB_TOKEN environment variable in CircleCI'
+say 'please, provide GITHUB_TOKEN and PRONTO_GITHUB_ACCESS_TOKEN environment variable in CircleCI'
 say '------------------------------------------------------------------'
 
 say 'Copying heroku configuration'
 copy_file 'lib/install/app.json', 'app.json'
 copy_file 'lib/install/Procfile', 'Procfile'
+
+run <<~INSATLL_BREW_DEPS
+  if hash brew 2>/dev/null; then                                                                                                        [21:33:49]
+    brew bundle
+  fi
+INSATLL_BREW_DEPS

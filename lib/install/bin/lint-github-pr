@@ -11,7 +11,6 @@ then
 fi
 
 BUNDLE_GEMFILE=Gemfile.tools
-PRONTO_GITHUB_ACCESS_TOKEN=$GITHUB_TOKEN
 
 bundle exec pronto run -c origin/master $reporters_opt --exit-code $@
 

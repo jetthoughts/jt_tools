@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+mkdir -p tmp/
+
+cd tmp
+rm -rf test_tmpl
+
+rails new test_tmpl -m ../template.rb
+
+git add .
+git commit -m 'Initial Commit'
+
+cd test_tmpl
+
+bin/tools-setup
+bin/tools-upgrade
+
+bin/rubocop
+bin/pronto run
+
+circleci config validate

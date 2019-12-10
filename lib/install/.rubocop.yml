@@ -4,22 +4,19 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6.4
+  TargetRubyVersion: 2.6
   Exclude:
     - 'db/schema.rb'
     - 'db/migrate/**/*'
 
-Layout/AlignHash:
-  EnforcedHashRocketStyle: key
-  EnforcedColonStyle: key
-  EnforcedLastArgumentHashStyle: always_inspect
-
-Layout/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
-
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - 'db/schema.rb'
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
@@ -32,6 +29,9 @@ Layout/MultilineMethodCallBraceLayout:
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
 
 Naming/PredicateName:
   Exclude:

@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/ruby:latest
+      - image: circleci/ruby:2.6.5-node
     parallelism: 3
     steps:
       - checkout

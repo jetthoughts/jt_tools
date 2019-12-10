@@ -1,8 +1,13 @@
 version: 2.1
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/ruby:latest
     parallelism: 3
     steps:
       - run: bin/test
+
+workflows:
+  test:
+    jobs:
+      - test

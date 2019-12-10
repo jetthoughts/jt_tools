@@ -6,10 +6,10 @@
 # invoked remotely via HTTP, that means the files are not present locally.
 # In that case, use `git clone` to download them to a local temporary dir.
 def add_template_repository_to_source_path
-  require 'shellwords'
-
   if __FILE__.match?(%r{\Ahttps?://})
+    require 'shellwords'
     require 'tmpdir'
+
     source_paths.unshift(tempdir = Dir.mktmpdir('jt_tools-'))
     at_exit { FileUtils.remove_entry(tempdir) }
     git clone: [

@@ -5,6 +5,7 @@ jobs:
       - image: circleci/ruby:latest
     parallelism: 3
     steps:
+      - checkout
       - run: bin/test
 
 workflows:

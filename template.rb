@@ -6,15 +6,18 @@
 # invoked remotely via HTTP, that means the files are not present locally.
 # In that case, use `git clone` to download them to a local temporary dir.
 def add_template_repository_to_source_path
-  if __FILE__ =~ %r{\Ahttps?://}
-    require "tmpdir"
-    source_paths.unshift(tempdir = Dir.mktmpdir("jt_tools-"))
+  require 'shellwords'
+
+  if __FILE__.match?(%r{\Ahttps?://})
+    require 'tmpdir'
+    source_paths.unshift(tempdir = Dir.mktmpdir('jt_tools-'))
     at_exit { FileUtils.remove_entry(tempdir) }
     git clone: [
-      "--quiet",
-      "https://github.com/jetthoughts/jt_tools.git",
+      '--quiet',
+      'https://github.com/jetthoughts/jt_tools.git',
       tempdir
-    ].map(&:shellescape).join(" ")
+    ].map { |args| Shellwords.escape(args) }
+      .join(' ')
 
     if (branch = __FILE__[%r{jt_tools/(.+)/template.rb}, 1])
       Dir.chdir(tempdir) { git checkout: branch }
@@ -59,7 +62,6 @@ copy_file 'lib/install/.pronto_eslint_npm.yml', '.pronto_eslint_npm.yml'
 copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
 copy_file 'lib/install/.yamllint', '.yamllint'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
-
 
 say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'

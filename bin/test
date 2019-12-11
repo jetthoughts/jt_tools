@@ -17,7 +17,8 @@ git commit -m 'Initial Commit'
 bin/tools-setup
 bin/tools-upgrade
 
-bin/rubocop
+bin/rubocop --fail-level F
 bin/pronto run
 
+hash circleci 2>/dev/null || curl -fLSs https://circle.ci/cli | bash
 circleci config validate

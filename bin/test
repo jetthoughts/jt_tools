@@ -11,11 +11,14 @@ rails new test_tmpl -m ../template.rb
 
 cd test_tmpl
 
-git add .
-git commit -m 'Initial Commit'
-
+echo "Verify installation scripts:"
 bin/tools-setup
 bin/tools-upgrade
+
+echo "Verify linters setup:"
+
+git add .
+git commit -m 'Initial Commit'
 
 echo "class Test;end" > test.rb
 
@@ -23,7 +26,8 @@ git add .
 git commit -m 'Verification class'
 
 bin/rubocop --fail-level F test.rb
-bin/pronto run -c HEAD~1
+bin/pronto run -c HEAD~1 --no-exit-code
 
+echo "Verify CircleCI config:"
 hash circleci 2>/dev/null || curl -fLSs https://circle.ci/cli | bash
 circleci config validate

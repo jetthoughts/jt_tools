@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: gem update && gem install rails
       - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-      - run: sudo apt-get install cmake
+      - run: sudo apt-get install cmake curl
       - run: bin/test
 
 workflows:

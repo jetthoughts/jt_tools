@@ -29,10 +29,6 @@ end
 
 add_template_repository_to_source_path
 
-#gem_group :development do
-#  gem 'railties', '>= 4.2'
-#end
-#
 say 'Copying binstubs'
 directory 'lib/install/bin', 'bin'
 

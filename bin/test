@@ -17,8 +17,13 @@ git commit -m 'Initial Commit'
 bin/tools-setup
 bin/tools-upgrade
 
-bin/rubocop --fail-level F
-bin/pronto run
+echo "class Test;end" > test.rb
+
+git add .
+git commit -m 'Verification class'
+
+bin/rubocop --fail-level F test.rb
+bin/pronto run -c HEAD~1
 
 hash circleci 2>/dev/null || curl -fLSs https://circle.ci/cli | bash
 circleci config validate

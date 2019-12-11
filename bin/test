@@ -20,12 +20,12 @@ echo "Verify linters setup:"
 git add .
 git commit -m 'Initial Commit'
 
-echo "class Test;end" > test.rb
+echo "class SampleForLintes;end" > sample_for_linters.rb
 
 git add .
-git commit -m 'Verification class'
+git commit -m 'Adds sample_for_linters'
 
-bin/rubocop --fail-level F test.rb
+bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 
 echo "Verify CircleCI config:"

@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-curl -fLSs https://circle.ci/cli | DESTDIR=/opt/bin bash
+curl -fLSs https://circle.ci/cli | sudo bash
 
 mkdir -p tmp/
 

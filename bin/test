@@ -9,10 +9,10 @@ rm -rf test_tmpl
 
 rails new test_tmpl -m ../template.rb
 
+cd test_tmpl
+
 git add .
 git commit -m 'Initial Commit'
-
-cd test_tmpl
 
 bin/tools-setup
 bin/tools-upgrade

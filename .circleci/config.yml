@@ -6,7 +6,7 @@ jobs:
     parallelism: 1
     steps:
       - checkout
-      - run: gem update && gem install rails
+      - run: gem install rails -​-no-document -​-conservative
       - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: sudo apt-get install cmake curl
       - run: bin/test

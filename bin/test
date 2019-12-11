@@ -2,8 +2,6 @@
 
 set -eo pipefail
 
-curl -fLSs https://circle.ci/cli | sudo bash
-
 mkdir -p tmp/
 
 cd tmp
@@ -31,5 +29,4 @@ bin/rubocop --fail-level F test.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 
 echo "Verify CircleCI config:"
-/opt/bin/circleci version
-/opt/bin/circleci config validate
+circleci config validate

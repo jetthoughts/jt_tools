@@ -66,7 +66,9 @@ copy_file 'lib/install/.reek.yml', '.reek.yml'
 say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'
 directory 'lib/install/.dependabot', '.dependabot'
+
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
+gem 'codecov', require: false, groupK: :test
 
 say '------------------------------------------------------------------'
 say 'For running Pronto and auto-update of Gemfile.tools with CircleCI,'
@@ -80,3 +82,4 @@ copy_file 'lib/install/Procfile', 'Procfile'
 say 'Install Brew dependencies'
 copy_file 'lib/install/Brewfile', 'Brewfile'
 run 'hash brew 2>/dev/null && brew bundle'
+

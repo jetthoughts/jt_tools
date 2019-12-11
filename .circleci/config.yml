@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - run: gem install rails --no-rdoc --no-ri --update-sources
-      - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: sudo apt-get install cmake curl
       - run: curl -fLSs https://circle.ci/cli | sudo bash
+      - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: bin/test
 
 workflows:

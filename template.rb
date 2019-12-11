@@ -29,10 +29,10 @@ end
 
 add_template_repository_to_source_path
 
-gem_group :development do
-  gem 'railties', '>= 4.2'
-end
-
+#gem_group :development do
+#  gem 'railties', '>= 4.2'
+#end
+#
 say 'Copying binstubs'
 directory 'lib/install/bin', 'bin'
 
@@ -65,10 +65,16 @@ copy_file 'lib/install/.reek.yml', '.reek.yml'
 
 say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'
-directory 'lib/install/.dependabot', '.dependabot'
+if File.read('Gemfile').include? 'rspec'
+  gem 'rspec_junit_formatter', require: false, group: :test
+else
+  gem 'minitest-ci', require: false, group: :test
+end
 
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
-gem 'codecov', require: false, groupK: :test
+gem 'codecov', require: false, group: :test
+
+directory 'lib/install/.dependabot', '.dependabot'
 
 say '------------------------------------------------------------------'
 say 'For running Pronto and auto-update of Gemfile.tools with CircleCI,'

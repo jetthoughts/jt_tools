@@ -20,7 +20,7 @@ echo "Verify linters setup:"
 git add .
 git commit -m 'Initial Commit'
 
-echo "class SampleForLintes;end" > sample_for_linters.rb
+echo "class SampleForLinters;end" > sample_for_linters.rb
 
 git add .
 git commit -m 'Adds sample_for_linters'

@@ -60,6 +60,10 @@ copy_file 'lib/install/.yamllint', '.yamllint'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
 
 say 'Copying services configuration'
+copy_file 'lib/install/codecov.yml', 'codecov.yml'
+gem 'simplicov', require: false, group: :test
+gem 'codecov', require: false, group: :test
+
 directory 'lib/install/.circleci', '.circleci'
 if File.read('Gemfile').include? 'rspec'
   gem 'rspec_junit_formatter', require: false, group: :test
@@ -67,8 +71,6 @@ else
   gem 'minitest-ci', require: false, group: :test
 end
 
-copy_file 'lib/install/codecov.yml', 'codecov.yml'
-gem 'codecov', require: false, group: :test
 
 directory 'lib/install/.dependabot', '.dependabot'
 

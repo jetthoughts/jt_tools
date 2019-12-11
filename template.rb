@@ -66,6 +66,7 @@ copy_file 'lib/install/.reek.yml', '.reek.yml'
 say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'
 directory 'lib/install/.dependabot', '.dependabot'
+copy_file 'lib/install/codecov.yml', 'codecov.yml'
 
 say '------------------------------------------------------------------'
 say 'For running Pronto and auto-update of Gemfile.tools with CircleCI,'

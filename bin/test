@@ -29,6 +29,6 @@ bin/rubocop --fail-level F test.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 
 echo "Verify CircleCI config:"
-hash circleci 2>/dev/null || curl -fLSs https://circle.ci/cli | bash
+curl -fLSs https://circle.ci/cli | bash
 circleci version
 circleci config validate

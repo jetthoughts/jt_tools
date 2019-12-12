@@ -2,7 +2,7 @@
 
 # JetThoughts Tools
 
-Ruby on Rails ecosystem to maintain projects without lose insanity.
+Ruby on Rails ecosystem to maintain projects without losing your mind.
 Automatization scripts and services integrations which make your product world class level with no effort!
 
 More details could be found in such posts:

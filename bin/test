@@ -9,15 +9,24 @@ rm -rf test_tmpl
 
 rails new test_tmpl -m ../template.rb
 
-git add .
-git commit -m 'Initial Commit'
-
 cd test_tmpl
 
+echo "Verify installation scripts:"
 bin/tools-setup
 bin/tools-upgrade
 
-bin/rubocop
-bin/pronto run
+echo "Verify linters setup:"
 
+git add .
+git commit -m 'Initial Commit'
+
+echo "class SampleForLinters;end" > sample_for_linters.rb
+
+git add .
+git commit -m 'Adds sample_for_linters'
+
+bin/rubocop --fail-level F sample_for_linters.rb
+bin/pronto run -c HEAD~1 --no-exit-code
+
+echo "Verify CircleCI config:"
 circleci config validate

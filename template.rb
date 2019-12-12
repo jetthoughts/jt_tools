@@ -29,10 +29,6 @@ end
 
 add_template_repository_to_source_path
 
-gem_group :development do
-  gem 'railties', '>= 4.2'
-end
-
 say 'Copying binstubs'
 directory 'lib/install/bin', 'bin'
 
@@ -65,6 +61,15 @@ copy_file 'lib/install/.reek.yml', '.reek.yml'
 
 say 'Copying services configuration'
 directory 'lib/install/.circleci', '.circleci'
+if File.read('Gemfile').include? 'rspec'
+  gem 'rspec_junit_formatter', require: false, group: :test
+else
+  gem 'minitest-ci', require: false, group: :test
+end
+
+copy_file 'lib/install/codecov.yml', 'codecov.yml'
+gem 'codecov', require: false, group: :test
+
 directory 'lib/install/.dependabot', '.dependabot'
 
 say '------------------------------------------------------------------'
@@ -79,3 +84,4 @@ copy_file 'lib/install/Procfile', 'Procfile'
 say 'Install Brew dependencies'
 copy_file 'lib/install/Brewfile', 'Brewfile'
 run 'hash brew 2>/dev/null && brew bundle'
+

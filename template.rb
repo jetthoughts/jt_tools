@@ -29,24 +29,16 @@ end
 
 add_template_repository_to_source_path
 
-say 'Copying binstubs'
+say '=> Copying binstubs'
 directory 'lib/install/bin', 'bin'
 
 chmod 'bin', 0o755 & ~File.umask, verbose: false
 
-say 'Setup default bundle parallel jobs to 4'
-run 'bundle config jobs 4'
-
-say 'Copying tools gemfile'
+say '=> Copying tools gemfile'
 copy_file 'lib/install/Gemfile.tools', 'Gemfile.tools'
 
 run 'yarn add -D eslint eslint-config-airbnb-base \
   eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier'
-
-run 'bin/tools-setup'
-
-run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub pronto'
-run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
 
 say 'Copying lint configurations'
 copy_file 'lib/install/.better-html.yml', '.better-html.yml'
@@ -59,7 +51,7 @@ copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
 copy_file 'lib/install/.yamllint', '.yamllint'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
 
-say 'Copying services configuration'
+say '=> Copying services configuration'
 gem 'simplecov', require: false, group: :test
 
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
@@ -80,20 +72,37 @@ end
 
 directory 'lib/install/.dependabot', '.dependabot'
 
-say 'Copying heroku configuration'
+say '=> Copying heroku configuration'
 copy_file 'lib/install/app.json', 'app.json'
 copy_file 'lib/install/Procfile', 'Procfile'
 
-say 'Install Brew dependencies'
+say '=> Install Brew dependencies'
 copy_file 'lib/install/Brewfile', 'Brewfile'
 
 say 'Setup git hooks'
 directory 'lib/install/bin/git-hooks', 'bin/git-hooks'
-run 'git config core.hooksPath ./bin/git-hooks'
 
-say 'Install all new dependencies'
-run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
-run 'bundle check || bundle'
+require 'bundler'
+Bundler.with_original_env do
+  say '=> Install tools'
+  run 'bin/tools-setup'
+
+  say '=> Generate binstubs for linters'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub pronto'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
+
+  say '=> Set git hooks'
+  run 'git config core.hooksPath ./bin/git-hooks'
+
+  say '=> Install all new dependencies'
+  run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
+end
+
+after_bundle do
+  say '=> Setup default bundle config'
+  run 'bundle config jobs 4'
+  run 'bundle config retry 3'
+end
 
 say '**************************************************************************'
 say '**************************************************************************'

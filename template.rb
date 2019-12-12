@@ -87,6 +87,10 @@ copy_file 'lib/install/Procfile', 'Procfile'
 say 'Install Brew dependencies'
 copy_file 'lib/install/Brewfile', 'Brewfile'
 
+say 'Setup git hooks'
+directory 'lib/install/bin/git-hooks', 'bin/git-hooks'
+run 'git config core.hooksPath ./bin/git-hooks'
+
 say 'Install all new dependencies'
 run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
 run 'bundle check || bundle'

@@ -60,24 +60,25 @@ copy_file 'lib/install/.yamllint', '.yamllint'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
 
 say 'Copying services configuration'
+gem 'simplecov', require: false, group: :test
+
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
-gem 'simplicov', require: false, group: :test
 gem 'codecov', require: false, group: :test
 
 directory 'lib/install/.circleci', '.circleci'
+
+# Add helpers to setup Simplecov and codecov loading for tests
+directory 'lib/install/lib/test', 'lib/test'
+
 if File.read('Gemfile').include? 'rspec'
   gem 'rspec_junit_formatter', require: false, group: :test
+  insert_into_file 'spec/spec_helper.rb', "require 'test/coverage'\n", after: /\A/
 else
   gem 'minitest-ci', require: false, group: :test
+  insert_into_file 'test/test_helper.rb', "require 'test/coverage'\n", after: /\A/
 end
 
-
 directory 'lib/install/.dependabot', '.dependabot'
-
-say '------------------------------------------------------------------'
-say 'For running Pronto and auto-update of Gemfile.tools with CircleCI,'
-say 'please, provide GITHUB_TOKEN and PRONTO_GITHUB_ACCESS_TOKEN environment variable in CircleCI'
-say '------------------------------------------------------------------'
 
 say 'Copying heroku configuration'
 copy_file 'lib/install/app.json', 'app.json'
@@ -85,5 +86,19 @@ copy_file 'lib/install/Procfile', 'Procfile'
 
 say 'Install Brew dependencies'
 copy_file 'lib/install/Brewfile', 'Brewfile'
-run 'hash brew 2>/dev/null && brew bundle'
 
+say 'Install all new dependencies'
+run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
+run 'bundle check || bundle'
+
+say '**************************************************************************'
+say '**************************************************************************'
+say ''
+say 'For code coverage report aggregator, running code static analysis'
+say 'and auto-update of the tools.'
+say ''
+say 'Please, set CODECOV_TOKEN, GITHUB_TOKEN and PRONTO_GITHUB_ACCESS_TOKEN'
+say 'environment variables in CircleCI and your local env'
+say ''
+say '**************************************************************************'
+say '**************************************************************************'

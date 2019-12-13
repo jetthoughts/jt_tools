@@ -11,16 +11,22 @@ rails new test_tmpl -m ../template.rb
 
 cd test_tmpl
 
-echo "Verify installation scripts:"
+echo " => Verify CircleCI config:"
+circleci config validate
+
+echo " => Verify installation scripts:"
 bin/tools-setup
 bin/tools-upgrade
 
-echo "Verify linters setup:"
+echo " => Verify linters setup:"
 
 git add .
 git commit -m 'Initial Commit'
+git checkout -b origin/master
 
-echo "class SampleForLinters;end" > sample_for_linters.rb
+git checkout -b test_pr
+
+echo " => class SampleForLinters;end" > sample_for_linters.rb
 
 git add .
 git commit -m 'Adds sample_for_linters'
@@ -28,5 +34,12 @@ git commit -m 'Adds sample_for_linters'
 bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 
-echo "Verify CircleCI config:"
-circleci config validate
+#cd ..
+#rm -rf test_tmpl_pronto
+#git clone -l test_tmpl test_tmpl_pronto
+#cd test_tmpl_pronto
+CIRCLECI=false bin/lint-github-pr -f text
+
+echo " => Run git hooks verifications"
+bin/git-hooks/post-merge
+CIRCLECI=false bin/git-hooks/pre-push

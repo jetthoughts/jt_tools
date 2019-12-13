@@ -7,10 +7,7 @@ reporters_opt=""
 if [[ "$CIRCLECI" == "true" ]]
 then
   git fetch origin master
-  reporters_opt="-f github_status github_pr_review -c origin/master --exit-code"
+  reporters_opt="-f github_status github_pr_review"
 fi
 
-BUNDLE_GEMFILE=Gemfile.tools
-
-bundle exec pronto run -c origin/master $reporters_opt --exit-code $@
-
+bin/pronto run -c origin/master $reporters_opt --exit-code $@

@@ -11,6 +11,7 @@ jobs:
       - run: curl -fLSs https://circle.ci/cli | sudo bash
       - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: bin/test
+      - run: TEST_APP_TEMPLATE=true bin/test
 
 workflows:
   test:

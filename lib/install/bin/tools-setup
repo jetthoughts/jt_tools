@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-BUNDLE_GEMFILE=Gemfile.tools bundle install --jobs=4 --retry=3
-yarn install
+set -e
+
+export BUNDLE_GEMFILE=Gemfile.tools
+
+bundle check || bundle install --jobs=4 --retry=3
+
+yarn install --link-duplicates --non-interactive

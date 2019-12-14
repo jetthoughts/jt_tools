@@ -45,5 +45,5 @@ bin/pronto run -c HEAD~1 --no-exit-code
 CIRCLECI=false bin/lint-github-pr -f text
 
 echo " => Run git hooks verifications"
-bin/git-hooks/post-merge
-CIRCLECI=false bin/git-hooks/pre-push
+bin/git-hooks/post-merge.sample
+CIRCLECI=false bin/git-hooks/pre-push.sample

@@ -90,13 +90,13 @@ Bundler.with_original_env do
   say '=> Generate binstubs for linters'
   run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub pronto'
   run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
-
-  say '=> Set git hooks'
-  run 'git config core.hooksPath ./bin/git-hooks'
-
-  say '=> Install all new dependencies'
-  run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
 end
+
+say '=> Set git hooks'
+run 'git config core.hooksPath ./bin/git-hooks'
+
+say '=> Install all new dependencies'
+run 'hash brew 2>/dev/null && (brew bundle check || brew bundle install)'
 
 after_bundle do
   say '=> Setup default bundle config'

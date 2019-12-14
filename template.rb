@@ -10,17 +10,17 @@ def add_template_repository_to_source_path
     require 'shellwords'
     require 'tmpdir'
 
-    source_paths.unshift(tempdir = Dir.mktmpdir('jt_tools-'))
-    at_exit { FileUtils.remove_entry(tempdir) }
+    source_paths.unshift(temp_dir = Dir.mktmpdir('jt_tools-'))
+    at_exit { FileUtils.remove_entry(temp_dir) }
     git clone: [
       '--quiet',
       'https://github.com/jetthoughts/jt_tools.git',
-      tempdir
+      temp_dir
     ].map { |args| Shellwords.escape(args) }
       .join(' ')
 
     if (branch = __FILE__[%r{jt_tools/(.+)/template.rb}, 1])
-      Dir.chdir(tempdir) { git checkout: branch }
+      Dir.chdir(temp_dir) { git checkout: branch }
     end
   else
     source_paths.unshift(__dir__)
@@ -64,10 +64,18 @@ directory 'lib/install/lib/test', 'lib/test'
 
 if File.read('Gemfile').include? 'rspec'
   gem 'rspec_junit_formatter', require: false, group: :test
-  insert_into_file 'spec/spec_helper.rb', "require 'test/coverage'\n", after: /\A/
+  insert_into_file(
+    'spec/spec_helper.rb',
+    "require 'test/coverage'\n",
+    after: /\A/
+  )
 else
   gem 'minitest-ci', require: false, group: :test
-  insert_into_file 'test/test_helper.rb', "require 'test/coverage'\n", after: /\A/
+  insert_into_file(
+    'test/test_helper.rb',
+    "require 'test/coverage'\n",
+    after: /\A/
+  )
 end
 
 directory 'lib/install/.dependabot', '.dependabot'

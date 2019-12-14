@@ -20,6 +20,7 @@ else
 fi
 
 echo " => Verify CircleCI config:"
+cp .circleci/config.yml.sample .circleci/config.yml
 circleci config validate
 
 echo " => Verify installation scripts:"

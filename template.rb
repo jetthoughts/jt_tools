@@ -104,7 +104,11 @@ say '=> Set git hooks'
 run 'git config core.hooksPath ./bin/git-hooks'
 
 say '=> Install all new dependencies'
-pp run 'hash brew 2> /dev/null && (brew bundle check || brew bundle install) || echo "Please install Homebrew or Linuxbrew"'
+run <<~BREW_INSTALL
+  hash brew 2> /dev/null \
+  && (brew bundle check || brew bundle install) \
+  || echo "Please install Homebrew: https://brew.sh/"
+BREW_INSTALL
 
 after_bundle do
   say '=> Setup default bundle config'

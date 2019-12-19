@@ -49,7 +49,7 @@ git commit -m 'Adds sample_for_linters'
 bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec rails_best_practices --without-color --silent --test .
-BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/.erb-lint.yml
+BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/.erb-lint.yml .
 
 CIRCLECI=false bin/lint-pr -f text
 

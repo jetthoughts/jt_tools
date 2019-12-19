@@ -15,8 +15,8 @@ Layout/EmptyLinesAroundBlockBody:
 
 Layout/HashAlignment:
   EnforcedHashRocketStyle: separator
-    EnforcedColonStyle: table
-    EnforcedLastArgumentHashStyle: always_inspect
+  EnforcedColonStyle: table
+  EnforcedLastArgumentHashStyle: always_inspect
 
 Layout/LineLength:
   Max: 113

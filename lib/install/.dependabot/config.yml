@@ -1,3 +1,4 @@
+---
 version: 1
 update_configs:
   # Keep package.json (& lockfiles) up to date as soon as

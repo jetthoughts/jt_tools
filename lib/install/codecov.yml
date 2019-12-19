@@ -1,8 +1,9 @@
+---
 codecov:
   notify:
-    require_ci_to_pass: yes
+    require_ci_to_pass: true
 
 comment:
-  layout: diff, flags, files
-  behavior: once
-  require_changes: no
+  layout: 'diff, flags, files'
+  behavior: 'once'
+  require_changes: false

@@ -46,7 +46,7 @@ copy_file 'lib/install/.eslintrc.js', '.eslintrc.js'
 copy_file 'lib/install/.pronto.yml', '.pronto.yml'
 copy_file 'lib/install/.pronto_eslint_npm.yml', '.pronto_eslint_npm.yml'
 copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
-copy_file 'lib/install/.yamllint', '.yamllint'
+copy_file 'lib/install/.yamllint.yml', '.yamllint.yml'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
 copy_file 'lib/install/config/rails_best_practices.yml', 'config/rails_best_practices.yml'
 

@@ -2,6 +2,9 @@
 
 set -eo pipefail
 
+yamllint --config-file lib/install/.yamllint.yml --strict lib/install/**/.*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict lib/install/**/*.yml
+
 mkdir -p tmp/
 
 cd tmp
@@ -42,9 +45,14 @@ git commit -m 'Adds sample_for_linters'
 
 bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
+BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec rails_best_practices --without-color --silent --test .
+BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/.erb-lint.yml
 
 CIRCLECI=false bin/lint-pr -f text
 
 echo " => Run git hooks verifications"
 bin/git-hooks/post-merge.sample
 CIRCLECI=false bin/git-hooks/pre-push.sample
+
+bin/rubocop --config ../../lib/install/.rubocop.yml --fail-fast --debug --extra-details --display-style-guide --parallel ../../lib
+node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/install/**/.*.js

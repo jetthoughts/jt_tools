@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: gem install rails -N --update-sources
-      - run: sudo apt-get install cmake curl
+      - run: sudo apt-get install cmake curl yamllint python3-setuptools python3-pkg-resources
       - run: curl -fLSs https://circle.ci/cli | sudo bash
       - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
       - run: bin/test

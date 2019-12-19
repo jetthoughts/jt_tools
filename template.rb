@@ -58,6 +58,7 @@ copy_file 'lib/install/codecov.yml', 'codecov.yml'
 gem 'codecov', require: false, group: :test
 
 gem 'rollbar', group: [:production, :staging]
+gem 'oj'
 gem 'le', group: [:production, :staging]
 
 directory 'lib/install/.circleci', '.circleci'

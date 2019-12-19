@@ -20,6 +20,7 @@ else
 fi
 
 echo " => Verify CircleCI config:"
+cp .circleci/config.yml.sample .circleci/config.yml
 circleci config validate
 
 echo " => Verify installation scripts:"
@@ -45,5 +46,5 @@ bin/pronto run -c HEAD~1 --no-exit-code
 CIRCLECI=false bin/lint-github-pr -f text
 
 echo " => Run git hooks verifications"
-bin/git-hooks/post-merge
-CIRCLECI=false bin/git-hooks/pre-push
+bin/git-hooks/post-merge.sample
+CIRCLECI=false bin/git-hooks/pre-push.sample

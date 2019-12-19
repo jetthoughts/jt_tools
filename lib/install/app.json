@@ -54,7 +54,7 @@
     "ROLLBAR_ENDPOINT": {
       "required": true
     },
-    "ROLLBAR_ENV": "development",
+    "ROLLBAR_ENV": "development"
   },
   "addons": [
     "mailtrap:unpaid",

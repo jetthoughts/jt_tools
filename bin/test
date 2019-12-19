@@ -2,8 +2,8 @@
 
 set -eo pipefail
 
-yamllint --config-file lib/install/.yamllint.yml --strict lib/install/**/.*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict lib/install/**/*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ../../lib/install/**/.*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ../../lib/install/**/*.yml
 
 mkdir -p tmp/
 

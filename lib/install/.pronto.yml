@@ -3,10 +3,10 @@ all:
   exclude:
     - .*
     - .**/*
-    - bin/*
+    - bin/**/*
+    - config/**/*
     - db/schema.rb
     - db/migrate/**/*
-    - config/**/*
     - docs/**/*
     - node_modules/**/*
     - public/**/*
@@ -20,8 +20,6 @@ eslint:
 flay:
   exclude:
     - test/**/*
-
-format: "%{runner} %{level} %{msg}"
 
 max_warnings: 10
 verbose: true

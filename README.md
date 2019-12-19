@@ -55,7 +55,7 @@ bin/tools-upgrade
 Auto-review on GitHub opened Pull Rquests to follow code consensentcy
 
 ```bash
-bin/lint-github-pr
+bin/lint-pr
 ```
 
 Check localy all problems in the current branch cahnges

@@ -14,9 +14,12 @@ Layout/EmptyLinesAroundBlockBody:
     - 'db/schema.rb'
 
 Layout/HashAlignment:
-  EnforcedHashRocketStyle: key
-  EnforcedColonStyle: key
-  EnforcedLastArgumentHashStyle: always_inspect
+  EnforcedHashRocketStyle: separator
+    EnforcedColonStyle: table
+    EnforcedLastArgumentHashStyle: always_inspect
+
+Layout/LineLength:
+  Max: 113
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
@@ -39,10 +42,7 @@ Naming/PredicateName:
 
 Metrics/AbcSize:
   Exclude:
-    - test/**/*.rb
-
-Metrics/LineLength:
-  Max: 113
+    - 'test/**/*.rb'
 
 Metrics/ClassLength:
   CountComments: false
@@ -89,9 +89,6 @@ Style/TrailingCommaInHashLiteral:
 
 Rails:
   Enabled: true
-
-Rails/HasAndBelongsToMany:
-  Enabled: false
 
 Rails/SkipsModelValidations:
   Blacklist: []

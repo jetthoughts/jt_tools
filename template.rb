@@ -37,8 +37,7 @@ chmod 'bin', 0o755 & ~File.umask, verbose: false
 say '=> Copying tools gemfile'
 copy_file 'lib/install/Gemfile.tools', 'Gemfile.tools'
 
-run 'yarn add -D eslint eslint-config-airbnb-base \
-  eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier'
+run 'yarn add -D eslint'
 
 say 'Copying lint configurations'
 copy_file 'lib/install/.better-html.yml', '.better-html.yml'
@@ -57,6 +56,9 @@ gem 'simplecov', require: false, group: :test
 
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
 gem 'codecov', require: false, group: :test
+
+gem 'rollbar', group: [:production, :staging]
+gem 'le', group: [:production, :staging]
 
 directory 'lib/install/.circleci', '.circleci'
 

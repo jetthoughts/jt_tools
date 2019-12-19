@@ -43,7 +43,7 @@ git commit -m 'Adds sample_for_linters'
 bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 
-CIRCLECI=false bin/lint-github-pr -f text
+CIRCLECI=false bin/lint-pr -f text
 
 echo " => Run git hooks verifications"
 bin/git-hooks/post-merge.sample

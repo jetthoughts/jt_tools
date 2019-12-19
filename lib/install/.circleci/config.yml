@@ -118,7 +118,7 @@ jobs:
             - ./vendor/bundle-tools
             - ./node_modules
 
-      - run: bin/lint-github-pr
+      - run: bin/lint-pr
 
   upgrade_tools:
     docker:
@@ -145,4 +145,3 @@ jobs:
           name: Run Gemfile tools update in separate branch
           command: |
             ./bin/circleci-auto_upgrade_tools
-

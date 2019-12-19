@@ -12,8 +12,7 @@ update_configs:
       - match:
           dependency_type: production
           update_type: security
-    version_requirement_updates: off
-      -
+    version_requirement_updates: 'off'
   - package_manager: ruby:bundler
     directory: /
     update_schedule: weekly
@@ -29,4 +28,4 @@ update_configs:
           dependency_name: rspec*
       - match:
           dependency_name: capybara*
-    version_requirement_updates: off
+    version_requirement_updates: 'off'

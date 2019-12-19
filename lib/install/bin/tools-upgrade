@@ -5,3 +5,5 @@ set -e
 export BUNDLE_GEMFILE=Gemfile.tools
 
 bundle update --jobs=4 --retry=3
+
+yarn check || yarn install --link-duplicates --non-interactive

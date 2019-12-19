@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-bin/lint-github-pr
+bin/lint-pr
 
 # bin/rspec --tag critical
 # bin/rails test

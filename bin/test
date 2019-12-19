@@ -2,28 +2,31 @@
 
 set -eo pipefail
 
-yamllint --config-file lib/install/.yamllint.yml --strict ../../lib/install/**/.*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict ../../lib/install/**/*.yml
+echo "=> Yamllint:"
+yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict *.yml
+yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict **/.*/*.yml
 
 mkdir -p tmp/
 
 cd tmp
 rm -rf test_tmpl
 
+# Test installation of missed gems on applying template
 gem uninstall oj || true
 
 if [[ "TEST_APP_TEMPLATE" == "true" ]]
 then
-  rails new test_tmpl
+  rails new test_tmpl --quiet
   cd test_tmpl
   rails app:template LOCATION=../template.rb
 else
-  rails new test_tmpl -m ../template.rb
+  rails new test_tmpl --template ../template.rb --quiet
   cd test_tmpl
 fi
 
 echo " => Verify CircleCI config:"
-cp .circleci/config.yml.sample .circleci/config.yml
 circleci config validate
 
 echo " => Verify installation scripts:"
@@ -54,5 +57,5 @@ echo " => Run git hooks verifications"
 bin/git-hooks/post-merge.sample
 CIRCLECI=false bin/git-hooks/pre-push.sample
 
-bin/rubocop --config ../../lib/install/.rubocop.yml --fail-fast --debug --extra-details --display-style-guide --parallel ../../lib
-node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/install/**/.*.js
+bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --display-style-guide --parallel ../../lib
+node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js

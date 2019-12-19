@@ -1,3 +1,4 @@
+---
 version: 2.1
 jobs:
   test:
@@ -19,7 +20,7 @@ workflows:
       - test
 
   daily:
-    triggers: #use the triggers key to indicate a scheduled build
+    triggers:
       - schedule:
           cron: "0 0 * * *"
           filters:

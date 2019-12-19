@@ -52,6 +52,7 @@ copy_file 'lib/install/config/rails_best_practices.yml', 'config/rails_best_prac
 
 say '=> Copying services configuration'
 gem 'simplecov', require: false, group: :test
+copy_file 'lib/install/.simplecov', '.simplecov'
 
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
 gem 'codecov', require: false, group: :test
@@ -62,23 +63,10 @@ gem 'le', group: [:production, :staging]
 
 directory 'lib/install/.circleci', '.circleci'
 
-# Add helpers to setup Simplecov and codecov loading for tests
-directory 'lib/install/lib/test', 'lib/test'
-
 if File.read('Gemfile').include? 'rspec'
   gem 'rspec_junit_formatter', require: false, group: :test
-  insert_into_file(
-    'spec/spec_helper.rb',
-    "require 'test/coverage'\n",
-    after: /\A/
-  )
 else
   gem 'minitest-ci', require: false, group: :test
-  insert_into_file(
-    'test/test_helper.rb',
-    "require 'test/coverage'\n",
-    after: /\A/
-  )
 end
 
 directory 'lib/install/.dependabot', '.dependabot'
@@ -99,8 +87,8 @@ Bundler.with_original_env do
   run 'bin/tools-setup'
 
   say '=> Generate binstubs for linters'
-  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub pronto'
-  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub rubocop'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub -f pronto'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub -f rubocop'
 end
 
 say '=> Set git hooks'

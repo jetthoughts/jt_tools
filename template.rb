@@ -87,8 +87,8 @@ Bundler.with_original_env do
   run 'bin/tools-setup'
 
   say '=> Generate binstubs for linters'
-  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub -f pronto'
-  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub -f rubocop'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force pronto'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force rubocop'
 end
 
 say '=> Set git hooks'

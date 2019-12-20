@@ -49,6 +49,8 @@ copy_file 'lib/install/.rubocop.yml', '.rubocop.yml'
 copy_file 'lib/install/.yamllint.yml', '.yamllint.yml'
 copy_file 'lib/install/.reek.yml', '.reek.yml'
 copy_file 'lib/install/config/rails_best_practices.yml', 'config/rails_best_practices.yml'
+copy_file 'lib/install/.editorconfig', '.editorconfig'
+
 
 say '=> Copying services configuration'
 gem 'simplecov', require: false, group: :test

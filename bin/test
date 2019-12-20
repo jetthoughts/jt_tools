@@ -24,6 +24,7 @@ then
 else
   rails new test_tmpl --template ../template.rb --quiet --database postgresql
   cd test_tmpl
+  bin/setup
 fi
 
 echo " => Verify CircleCI config:"

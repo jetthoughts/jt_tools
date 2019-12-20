@@ -15,12 +15,12 @@ More details could be found in such posts:
 
 Pre-setup for service 
 
-* Heroku
-* CircleCI
+* Heroku (Heroku Reviews Apps)
+* CircleCI (Ruby, Node.js, Liners)
 * Codecov
-* Pronto
-* Static Code Analysisers: Rubocop, Reek, and etc.
+* Auto-review PR on GitHub: Pronto
 * Dependabot
+* EditorConfig
 
 ## Installation
 

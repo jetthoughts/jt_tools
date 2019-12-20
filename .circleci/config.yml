@@ -4,6 +4,15 @@ jobs:
   test:
     docker:
       - image: circleci/ruby:2.6-node
+        environment:
+          DATABASE_URL: postgresql://ubuntu@127.0.0.1/db_test
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 3
+
+      - image: circleci/postgres:alpine-ram
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: db_test
     parallelism: 1
     steps:
       - checkout

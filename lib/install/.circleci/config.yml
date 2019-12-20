@@ -42,9 +42,7 @@ jobs:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           RACK_ENV: test
-          PGHOST: 127.0.0.1
-          PGUSER: ubuntu
-          DATABASE_URL: postgresql:ubuntu@127.0.0.1/db_test
+          DATABASE_URL: postgresql://ubuntu@127.0.0.1/db_test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images

@@ -6,4 +6,4 @@ export BUNDLE_GEMFILE=Gemfile.tools
 
 bundle check || bundle install --jobs=4 --retry=3
 
-yarn check || yarn install --link-duplicates --non-interactive
+yarn check || yarn install

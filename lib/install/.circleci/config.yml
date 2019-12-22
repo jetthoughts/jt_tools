@@ -105,8 +105,11 @@ jobs:
             - asset-cache-v1-{{ arch }}-{{ .Branch }}-
             - asset-cache-v1-
 
-      - run: bin/webpack
-      - run: bin/rails assets:precompile
+      - run:
+          name: Precompile Assets
+          command: |
+            bin/webpack
+            bin/rails assets:precompile
 
       - save_cache:
           key: asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
@@ -131,7 +134,7 @@ jobs:
               --coverageReporters text-summary --coverageReporters html \
               --reporters=jest-junit
           environment:
-            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results.xml
+            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results
 
       - save_cache:
           name: Save Jest Cache
@@ -143,7 +146,7 @@ jobs:
           name: RSpec Tests
           command: |
             bin/rails db:schema:load
-            bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results --format progress
+            bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results.xml --format progress
 
       # collect reports
       - store_test_results:

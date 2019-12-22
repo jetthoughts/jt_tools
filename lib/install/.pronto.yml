@@ -5,8 +5,8 @@ all:
     - .**/*
     - bin/**/*
     - config/**/*
-    - db/schema.rb
     - db/migrate/**/*
+    - db/schema.rb
     - docs/**/*
     - node_modules/**/*
     - public/**/*

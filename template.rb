@@ -51,17 +51,24 @@ copy_file 'lib/install/.reek.yml', '.reek.yml'
 copy_file 'lib/install/config/rails_best_practices.yml', 'config/rails_best_practices.yml'
 copy_file 'lib/install/.editorconfig', '.editorconfig'
 
-
 say '=> Copying services configuration'
-gem 'simplecov', require: false, group: :test
 copy_file 'lib/install/.simplecov', '.simplecov'
-
 copy_file 'lib/install/codecov.yml', 'codecov.yml'
-gem 'codecov', require: false, group: :test
 
-gem 'rollbar', group: [:production, :staging]
+
+say '=> Adds service client API gems'
+
+gem_group :test do
+  gem 'simplecov', require: false, group: :test
+  gem 'codecov', require: false, group: :test
+end
+
 gem 'oj'
-gem 'le', group: [:production, :staging]
+
+gem_group :production, :staging do
+  gem 'rollbar'
+  gem 'le'
+end
 
 directory 'lib/install/.circleci', '.circleci'
 

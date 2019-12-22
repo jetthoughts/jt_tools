@@ -5,10 +5,12 @@ cask_args appdir: '/Applications'
 
 tap 'heroku/brew'
 
+# brew 'circleci'
+brew 'graphicsmagick'
 brew 'heroku'
 brew 'hub'
-# brew 'circleci'
 brew 'rbenv'
 brew 'ruby-build'
+brew 'vips'
 brew 'yamllint'
 brew 'yarn'

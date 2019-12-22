@@ -6,8 +6,8 @@ require:
 AllCops:
   TargetRubyVersion: 2.6
   Exclude:
-    - 'db/schema.rb'
     - 'db/migrate/**/*'
+    - 'db/schema.rb'
 
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
@@ -21,24 +21,20 @@ Layout/HashAlignment:
 Layout/LineLength:
   Max: 113
 
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: symmetrical
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-Layout/MultilineMethodCallBraceLayout:
-  EnforcedStyle: symmetrical
-
-Layout/SpaceInLambdaLiteral:
-  EnforcedStyle: require_space
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
-Naming/PredicateName:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
 
 Metrics/AbcSize:
   Exclude:
@@ -61,6 +57,10 @@ Metrics/ModuleLength:
 
 Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: required
+
+Naming/PredicateName:
+  Exclude:
+    - 'app/helpers/application_helper.rb'
 
 Style/ClassAndModuleChildren:
   Exclude:

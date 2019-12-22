@@ -2,6 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
+---
 
 version: 2.1
 
@@ -9,6 +10,7 @@ workflows:
   version: 2
   test:
     jobs:
+      - test
       - lint:
           filters:
             branches:
@@ -34,15 +36,16 @@ jobs:
       # specify the version you desire here
       - image: circleci/ruby:2.6-node-browsers
         environment:
-          COVERAGE: true
           BUNDLE_GEMFILE: Gemfile
-          BUNDLE_WITHOUT: "production:staging:development"
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
-          RAILS_ENV: test
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 3
+          BUNDLE_WITHOUT: "production:staging:development"
+          COVERAGE: true
+          DATABASE_URL: postgresql://ubuntu@localhost/db
+          NODE_ENV: test
           RACK_ENV: test
-          DATABASE_URL: postgresql://ubuntu@127.0.0.1/db_test
+          RAILS_ENV: test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -50,10 +53,17 @@ jobs:
       - image: circleci/postgres:alpine-ram
         environment:
           POSTGRES_USER: ubuntu
-          POSTGRES_DB: db_test
+          POSTGRES_DB: db
 
     steps:
       - checkout
+
+      - run:
+          name: Install Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler:$BUNDLER_VERSION
 
       # Download and cache dependencies
       - restore_cache:
@@ -72,12 +82,72 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - run: bin/rails db:schema:load
-      - run: bin/rails test
+      - restore_cache:
+          name: Restore Yarn Cache
+          keys:
+            - v1-yarn-dependencies-{{ checksum "yarn.lock" }}
+            - v1-yarn-dependencies-
+
+      - run:
+          name: Install Yarn Dependencies
+          command: bin/yarn check || bin/yarn install
+
+      - save_cache:
+          name: Save Yarn Cache
+          paths:
+            - ./node_modules
+          key: v1-yarn-dependencies-{{ checksum "yarn.lock" }}
+
+      - restore_cache:
+          keys:
+            - asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
+            - asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-
+            - asset-cache-v1-{{ arch }}-{{ .Branch }}-
+            - asset-cache-v1-
+
+      - run: bin/webpack
+      - run: bin/rails assets:precompile
+
+      - save_cache:
+          key: asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - public/assets
+            - public/pack-test
+            - tmp/cache/assets
+            - tmp/cache/webpacker
+
+      - restore_cache:
+          name: Restore Jest Cache
+          keys:
+            - jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+            - jest-cache-v1-{{ arch }}-{{ .Branch }}-
+            - jest-cache-v1-
+
+      - run:
+          name: JavaScript Unit Tests
+          command: |
+            bin/yarn test --ci --no-watchman \
+              --coverage --coverageDirectory coverage/jest \
+              --coverageReporters text-summary --coverageReporters html \
+              --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results.xml
+
+      - save_cache:
+          name: Save Jest Cache
+          key: jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - tmp/cache/jest
+
+      - run:
+          name: RSpec Tests
+          command: |
+            bin/rails db:schema:load
+            bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results --format progress
 
       # collect reports
       - store_test_results:
-          path: ./test/reports/
+          path: ./tmp/reports/
       - store_artifacts:
           path: ./coverage
   lint:
@@ -86,7 +156,7 @@ jobs:
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
-          BUNDLE_JOBS: 3
+          BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
 
     steps:
@@ -99,7 +169,7 @@ jobs:
 
       - run:
           name: Install cmake for building pronto dependencies
-          command: sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
+          command: sudo apt-get update  && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
 
       - run:
           name: Install Bundle Dependencies
@@ -107,7 +177,7 @@ jobs:
 
       - run:
           name: Install Node Packages
-          command: bin/yarn
+          command: bin/yarn check || bin/yarn install
 
       - save_cache:
           key: v1-tools-dependencies-{{ checksum "Gemfile.tools.lock" }}-{{ checksum "yarn.lock" }}
@@ -123,7 +193,7 @@ jobs:
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
-          BUNDLE_JOBS: 3
+          BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
 
     steps:
@@ -136,7 +206,7 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      - run: sudo apt-get install cmake
+      - run: sudo apt-get update  && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
 
       - run:
           name: Run Gemfile tools update in separate branch

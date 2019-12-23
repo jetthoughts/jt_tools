@@ -2,7 +2,7 @@
 
 # JetThoughts Tools
 
-Ruby on Rails ecosystem to maintain projects without losing your mind.
+Ruby on Rails Continious Deployemnt ecosystem to maintain projects without losing your mind.
 Automatization scripts and services integrations which make your product world class level with no effort!
 
 More details could be found in such posts:
@@ -15,12 +15,16 @@ More details could be found in such posts:
 
 Pre-setup for service 
 
-* Heroku (Heroku Reviews Apps)
-* CircleCI (Ruby, Node.js, Liners)
-* Codecov
-* Auto-review PR on GitHub: Pronto
-* Dependabot
-* EditorConfig
+* [GitHub](https://github.com)
+* [Heroku](https://jtway.co/make-master-stable-again-b15c9ff3b129) (Heroku Reviews Apps)
+* [CircleCI](https://circleci.com/)
+* [Codecov](https://codecov.io/)
+* [Dependabot](https://dependabot.com/)
+* Code Styles:
+  * [Pronto](https://jtway.co/effortless-code-review-for-pull-request-changes-241206b1cb04)
+  * [ESLint](https://eslint.org/)
+  * [Rubocop](https://github.com/rubocop-hq/rubocop)
+  * [EditorConfig](https://editorconfig.org/)
 
 ## Installation
 

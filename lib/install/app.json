@@ -4,9 +4,6 @@
     "postdeploy": "bin/heroku-postdeploy"
   },
   "env": {
-    "HEROKU_APP_NAME": {
-      "required": true
-    },
     "RAILS_MASTER_KEY": {
       "required": true
     },

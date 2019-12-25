@@ -5,9 +5,6 @@ detectors:
   UncommunicativeVariableName:
     accept:
       - e
-  NestedIterators:
-    exclude:
-      - "ActiveJob::TestHelper#enqueued_jobs_for"
   UnusedPrivateMethod:
     enabled: false
   DuplicateMethodCall:
@@ -19,12 +16,12 @@ directories:
       enabled: false
     UtilityFunction:
       enabled: false
-  "**/app/jobs":
+  "**/app/jobs/**":
     UtilityFunction:
       enabled: false
-  "**/app/helpers":
+  "**/app/helpers/**":
     UtilityFunction:
       enabled: false
-  "**/spec":
+  "**/spec/**":
     UtilityFunction:
       enabled: false

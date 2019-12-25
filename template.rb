@@ -74,8 +74,18 @@ directory 'lib/install/.circleci', '.circleci'
 
 if File.read('Gemfile').include? 'rspec'
   gem 'rspec_junit_formatter', require: false, group: :test
+  insert_into_file(
+    'spec/spec_helper.rb',
+    "require 'simplecov' if ENV['COVERAGE']\n",
+    after: /\A/
+  )
 else
   gem 'minitest-ci', require: false, group: :test
+  insert_into_file(
+    'test/test_helper.rb',
+    "require 'simplecov' if ENV['COVERAGE']\n",
+    after: /\A/
+  )
 end
 
 directory 'lib/install/.dependabot', '.dependabot'

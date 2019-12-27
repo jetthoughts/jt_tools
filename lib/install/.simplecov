@@ -5,7 +5,7 @@ if defined?(Spring) && ENV['DISABLE_SPRING'].nil?
   puts 'Please disable Spring to get COVERAGE by `DISABLE_SPRING=1 COVERAGE=1 bin/rspec`'
 else
   SimpleCov.start 'rails' do
-    add_filter %w[app/views bin config db spec test]
+    add_filter %w[app/views bin spec test]
 
     maximum_coverage_drop 0.5
   end

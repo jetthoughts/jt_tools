@@ -24,6 +24,9 @@ Layout/HashAlignment:
 Layout/LineLength:
   Max: 113
 
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: symmetrical
 

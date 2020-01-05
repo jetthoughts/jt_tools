@@ -10,6 +10,7 @@ More details could be found in such posts:
 * [How to Setup a Project That Can Host Up to 1000 Users for Free](https://jtway.co/how-to-setup-a-project-that-can-host-up-to-1000-users-for-free-ab59ad3edaf1)
 * [Our Default Ruby Development Stack](https://jtway.co/our-default-ruby-development-stack-9d7e80ef21df)
 * [Heroku Reviews Apps prevent delivering bugs on production](https://jtway.co/make-master-stable-again-b15c9ff3b129)
+* [Effortless Code Conventions Review for Pull Request Changes](https://jtway.co/effortless-code-review-for-pull-request-changes-241206b1cb04)
 
 # Services and Tools
 

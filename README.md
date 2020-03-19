@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/jetthoughts/jt_tools.svg?style=svg)](https://circleci.com/gh/jetthoughts/jt_tools)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools?ref=badge_shield)
 
 # JetThoughts Tools
 
@@ -72,3 +73,6 @@ bin/pronto run
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools?ref=badge_large)

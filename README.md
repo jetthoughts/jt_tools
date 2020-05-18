@@ -22,6 +22,7 @@ Pre-setup for service
 * [CircleCI](https://circleci.com/)
 * [Codecov](https://codecov.io/) and [Simplecov](https://github.com/colszowka/simplecov)
 * [Dependabot](https://dependabot.com/)
+* [MemCachier](https://www.memcachier.com/)
 * Code Styles:
   * [Pronto](https://jtway.co/effortless-code-review-for-pull-request-changes-241206b1cb04)
   * [Rubocop](https://github.com/rubocop-hq/rubocop)

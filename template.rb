@@ -156,6 +156,7 @@ CODE
 environment(memcachier_config, env: 'production')
 environment(memcachier_config, env: 'staging') if File.exist?('config/environments/staging.rb')
 
+
 after_bundle do
   say '=> Setup default bundle config'
   run 'bundle config jobs 4'

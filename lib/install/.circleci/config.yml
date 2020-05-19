@@ -8,6 +8,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.0.0
+  node: circleci/node@2.1.1
 
 workflows:
   version: 2
@@ -63,22 +64,10 @@ jobs:
       - ruby/install-deps:
           key: v1-dependencies
           path: ./vendor/bundle
-
-      - restore_cache:
-          name: Restore Yarn Cache
-          keys:
-            - v1-yarn-dependencies-{{ checksum "yarn.lock" }}
-            - v1-yarn-dependencies-
-
-      - run:
-          name: Install Yarn Dependencies
-          command: bin/yarn check || bin/yarn install
-
-      - save_cache:
-          name: Save Yarn Cache
-          paths:
-            - ./node_modules
-          key: v1-yarn-dependencies-{{ checksum "yarn.lock" }}
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: yarn.lock
+          cache-version: v1
 
       - restore_cache:
           keys:
@@ -183,15 +172,10 @@ jobs:
 
     steps:
       - checkout
+      - ruby/install-deps:
+          with-cache: false
 
-      - run:
-          name: Install Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.tools.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
-
-      - run: sudo apt-get update  && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
+      - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
 
       - run:
           name: Run Gemfile tools update in separate branch

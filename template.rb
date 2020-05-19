@@ -120,6 +120,9 @@ run <<~BREW_INSTALL
   || echo "Please install Homebrew: https://brew.sh/"
 BREW_INSTALL
 
+say '=> Update development config'
+uncomment_lines 'config/environments/development.rb', /config\.file_watcher = ActiveSupport::EventedFileUpdateChecker/
+
 after_bundle do
   say '=> Setup default bundle config'
   run 'bundle config jobs 4'

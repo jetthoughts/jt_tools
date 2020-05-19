@@ -2,7 +2,7 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'version'
+require_relative 'lib/jt_tool/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'jt_tools'

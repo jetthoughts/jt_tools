@@ -66,8 +66,9 @@ end
 gem 'oj'
 
 gem_group :production, :staging do
+  gem 'dalli'
+  gem 'r7insight'
   gem 'rollbar'
-  gem 'le'
 end
 
 directory 'lib/install/.circleci', '.circleci'

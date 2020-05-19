@@ -6,6 +6,9 @@
 
 version: 2.1
 
+orbs:
+  ruby: circleci/ruby@1.0.0
+
 workflows:
   version: 2
   test:
@@ -57,30 +60,9 @@ jobs:
 
     steps:
       - checkout
-
-      - run:
-          name: Install Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
-
-      # Download and cache dependencies
-      - restore_cache:
-          name: Restore Bundler Cache
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Install Bundler Dependencies
-          command: bin/bundle check --path vendor/bundle || bin/bundle install --deployment
-
-      - save_cache:
-          name: Save Bundler Cache
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - ruby/install-deps:
+          key: v1-dependencies
+          path: ./vendor/bundle
 
       - restore_cache:
           name: Restore Yarn Cache

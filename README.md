@@ -58,13 +58,13 @@ bin/tools-setup
 bin/tools-upgrade
 ```
 
-Auto-review on GitHub opened Pull Rquests to follow code consensentcy
+Auto-review on GitHub opened Pull Rquests to follow code consistency
 
 ```bash
 bin/lint-pr
 ```
 
-Check localy all problems in the current branch cahnges
+Check locally all problems in the current branch changes
 
 ```bash
 bin/pronto run

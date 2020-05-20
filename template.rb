@@ -66,8 +66,9 @@ end
 gem 'oj'
 
 gem_group :production, :staging do
+  gem 'dalli'
+  gem 'r7insight'
   gem 'rollbar'
-  gem 'le'
 end
 
 directory 'lib/install/.circleci', '.circleci'
@@ -122,6 +123,23 @@ BREW_INSTALL
 
 say '=> Update development config'
 uncomment_lines 'config/environments/development.rb', /config\.file_watcher = ActiveSupport::EventedFileUpdateChecker/
+
+say '=> Set up R7Insight'
+r7insight_config = <<-CODE
+  if ENV['R7INSIGHT_TOKEN'].present?
+    Rails.logger = R7Insight.new(ENV['R7INSIGHT_TOKEN'], ENV['R7INSIGHT_REGION'])
+  end
+CODE
+insert_into_file 'config/environments/production.rb',
+                 "require 'r7_insight.rb'" + "\n\n",
+                 before: 'Rails.application.configure do'
+environment(r7insight_config, env: 'production')
+if File.exist?('config/environments/staging.rb')
+  insert_into_file 'config/environments/staging.rb',
+                   "require 'r7_insight.rb'" + "\n\n",
+                   before: 'Rails.application.configure do'
+  environment(r7insight_config, env: 'staging')
+end
 
 after_bundle do
   say '=> Setup default bundle config'

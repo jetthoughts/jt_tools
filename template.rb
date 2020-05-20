@@ -141,6 +141,22 @@ if File.exist?('config/environments/staging.rb')
   environment(r7insight_config, env: 'staging')
 end
 
+say '=> Set up Memcachier'
+memcachier_config = <<-CODE
+  if ENV["MEMCACHIER_SERVERS"]
+    config.cache_store = :mem_cache_store,
+      ENV["MEMCACHIER_SERVERS"].split(","), {
+        username: ENV["MEMCACHIER_USERNAME"], password: ENV["MEMCACHIER_PASSWORD"],
+        failover: true, socket_timeout: 1.5, socket_failure_delay: 0.2, down_retry_delay: 60,
+        pool_size: ENV.fetch("RAILS_MAX_THREADS") { 5 },
+      }
+  end
+
+CODE
+environment(memcachier_config, env: 'production')
+environment(memcachier_config, env: 'staging') if File.exist?('config/environments/staging.rb')
+
+
 after_bundle do
   say '=> Setup default bundle config'
   run 'bundle config jobs 4'

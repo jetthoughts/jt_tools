@@ -62,6 +62,7 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps:
+          bundler-version: '`cat Gemfile.lock | tail -1 | tr -d " "`'
           key: v1-dependencies
           path: ./vendor/bundle
       - node/install-packages:
@@ -172,8 +173,13 @@ jobs:
 
     steps:
       - checkout
-      - ruby/install-deps:
-          with-cache: false
+
+      - run:
+          name: Install Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.tools.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler:$BUNDLER_VERSION
 
       - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
 

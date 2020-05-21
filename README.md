@@ -40,7 +40,7 @@ rails app:template LOCATION=https://raw.githubusercontent.com/jetthoughts/jt_too
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'jt_tools', groups: [:development]
+gem 'jt_tools', groups: [:development], github: 'jetthoughts/jt_tools'
 ```
 
 And then execute:

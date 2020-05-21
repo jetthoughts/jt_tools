@@ -9,6 +9,9 @@ AllCops:
     - 'db/migrate/**/*'
     - 'db/schema.rb'
 
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - 'db/schema.rb'
@@ -39,8 +42,17 @@ Layout/MultilineOperationIndentation:
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
 
 Metrics/AbcSize:
   Exclude:
@@ -75,11 +87,26 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
+Style/ExponentialNotation:
+  Enabled: true
+
 Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
   Enabled: true
 
 Style/SafeNavigation:
   Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: true
 
 Style/StabbyLambdaParentheses:
   EnforcedStyle: require_no_parentheses

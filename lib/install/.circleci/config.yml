@@ -6,6 +6,10 @@
 
 version: 2.1
 
+orbs:
+  ruby: circleci/ruby@1.0.0
+  node: circleci/node@2.1.1
+
 workflows:
   version: 2
   test:
@@ -34,7 +38,7 @@ jobs:
   test:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.6-node-browsers
+      - image: circleci/ruby:2.7-node-browsers
         environment:
           BUNDLE_GEMFILE: Gemfile
           BUNDLE_PATH: vendor/bundle
@@ -57,46 +61,14 @@ jobs:
 
     steps:
       - checkout
-
-      - run:
-          name: Install Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
-
-      # Download and cache dependencies
-      - restore_cache:
-          name: Restore Bundler Cache
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Install Bundler Dependencies
-          command: bin/bundle check --path vendor/bundle || bin/bundle install --deployment
-
-      - save_cache:
-          name: Save Bundler Cache
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
-      - restore_cache:
-          name: Restore Yarn Cache
-          keys:
-            - v1-yarn-dependencies-{{ checksum "yarn.lock" }}
-            - v1-yarn-dependencies-
-
-      - run:
-          name: Install Yarn Dependencies
-          command: bin/yarn check || bin/yarn install
-
-      - save_cache:
-          name: Save Yarn Cache
-          paths:
-            - ./node_modules
-          key: v1-yarn-dependencies-{{ checksum "yarn.lock" }}
+      - ruby/install-deps:
+          bundler-version: '`cat Gemfile.lock | tail -1 | tr -d " "`'
+          key: v1-dependencies
+          path: ./vendor/bundle
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: yarn.lock
+          cache-version: v1
 
       - restore_cache:
           keys:
@@ -155,7 +127,7 @@ jobs:
           path: ./coverage
   lint:
     docker:
-      - image: circleci/ruby:2.6-stretch-node
+      - image: circleci/ruby:2.7-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
@@ -192,7 +164,7 @@ jobs:
 
   upgrade_tools:
     docker:
-      - image: circleci/ruby:2.6-stretch-node
+      - image: circleci/ruby:2.7-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
@@ -209,7 +181,7 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      - run: sudo apt-get update  && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
+      - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
 
       - run:
           name: Run Gemfile tools update in separate branch

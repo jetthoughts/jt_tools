@@ -65,6 +65,7 @@ jobs:
           bundler-version: '`cat Gemfile.lock | tail -1 | tr -d " "`'
           key: v1-dependencies
       - node/install-packages:
+          app-dir: .
           pkg-manager: yarn
           cache-key: yarn.lock
           cache-version: v1

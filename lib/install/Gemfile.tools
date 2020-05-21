@@ -22,4 +22,5 @@ group :tools do
 
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+  gem 'better_html', '< 1.0.15'
 end

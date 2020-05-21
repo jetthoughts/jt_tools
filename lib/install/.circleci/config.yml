@@ -38,7 +38,7 @@ jobs:
   test:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.6-node-browsers
+      - image: circleci/ruby:2.7-node-browsers
         environment:
           BUNDLE_GEMFILE: Gemfile
           BUNDLE_PATH: vendor/bundle
@@ -127,7 +127,7 @@ jobs:
           path: ./coverage
   lint:
     docker:
-      - image: circleci/ruby:2.6-stretch-node
+      - image: circleci/ruby:2.7-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
@@ -164,7 +164,7 @@ jobs:
 
   upgrade_tools:
     docker:
-      - image: circleci/ruby:2.6-stretch-node
+      - image: circleci/ruby:2.7-stretch-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools

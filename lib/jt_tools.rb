@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require 'jt_tools/version'
+require "jt_tools/version"
 
-require 'jt_tools/railtie' if defined?(Rails)
+require "jt_tools/railtie" if defined?(Rails)

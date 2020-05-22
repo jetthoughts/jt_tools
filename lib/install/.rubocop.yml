@@ -9,6 +9,10 @@ AllCops:
     - 'db/migrate/**/*'
     - 'db/schema.rb'
 
+Layout/DotPosition:
+  Enabled: true
+  EnforcedStyle: leading
+
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 
@@ -115,6 +119,8 @@ Style/StabbyLambdaParentheses:
   EnforcedStyle: require_no_parentheses
 
 Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
   Exclude:
     - 'db/schema.rb'
 

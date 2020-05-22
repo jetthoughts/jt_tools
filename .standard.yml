@@ -1,0 +1,10 @@
+default_ignores: false
+#fix: true
+format: progress
+parallel: true
+ruby_version: 2.7.1
+
+ignore:
+  - 'test/**/*':
+      - Layout/AlignHash
+  - 'tmp/**/*'

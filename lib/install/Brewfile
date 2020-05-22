@@ -5,12 +5,13 @@ cask_args appdir: '/Applications'
 
 tap 'heroku/brew'
 
-# brew 'circleci'
-brew 'graphicsmagick'
+brew 'circleci'
+brew 'graphicsmagick' # For ActiveStorage
 brew 'heroku'
-brew 'hub'
+brew 'hub' # For creating Pull Request from CLI
+brew 'postgresql'
 brew 'rbenv'
 brew 'ruby-build'
-brew 'vips'
-brew 'yamllint'
+brew 'vips' # For ActiveStorage
+brew 'yamllint' # For Linters
 brew 'yarn'

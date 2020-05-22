@@ -4,7 +4,7 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   Exclude:
     - 'db/migrate/**/*'
     - 'db/schema.rb'
@@ -47,6 +47,9 @@ Layout/SpaceAroundMethodCallOperator:
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
 
 Lint/RaiseException:
   Enabled: true

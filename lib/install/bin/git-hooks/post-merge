@@ -12,7 +12,11 @@ if [[ $reflog_message =~ "merge" ]]; then
 fi
 
 if [[ $branch_name == "master" ]]; then
-  bin/update
+  bin/spring stop; pkill "spring";
+  rm -rf tmp/cache
+
+  bin/setup
+
   bin/rake db:reset
 
   echo "Removing merged branches..."

@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/ruby:2.6-node
+      - image: cimg/ruby:2.7-node
         environment:
           DATABASE_URL: postgresql://ubuntu@127.0.0.1/db_test
           BUNDLE_JOBS: 4
@@ -13,15 +13,33 @@ jobs:
         environment:
           POSTGRES_USER: ubuntu
           POSTGRES_DB: db_test
-    parallelism: 1
+    parallelism: 2
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - rails-v2-{{ arch }}-{{ .Revision }}
+            - rails-v2-{{ arch }}-
+            - rails-v2-
+
       - run: gem install rails -N --update-sources
-      - run: sudo apt-get install cmake curl yamllint python3-setuptools python3-pkg-resources
-      - run: curl -fLSs https://circle.ci/cli | sudo bash
+
+      - run: sudo apt-get update -qq && sudo apt-get install -yq --no-install-recommends
+             cmake curl yamllint python3-setuptools python3-pkg-resources pkg-config
+      - run: curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh |
+             sudo bash
       - run: git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-      - run: bin/test
-      - run: TEST_APP_TEMPLATE=true bin/test
+
+      - run: |
+          [[ $CIRCLE_NODE_INDEX == "0" ]] || bin/test
+      - run: |
+          [[ $CIRCLE_NODE_INDEX == "1" ]] || TEST_APP_TEMPLATE=true bin/test
+
+      - save_cache:
+          key: rails-v2-{{ arch }}-{{ .Revision }}
+          paths:
+            - /home/circleci/.rubygems
+            - /home/circleci/.cache
 
 workflows:
   test:

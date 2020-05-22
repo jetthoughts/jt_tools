@@ -4,7 +4,7 @@ set -e
 
 echo "-----Create and switch to new branch-----"
 
-current_date=`date +"%Y%m%d%H%M"`
+current_date=$(date +"%Y%m%d%H%M")
 new_branch_name="auto-upgrade-tools-dependencies-${current_date}"
 git checkout -b $new_branch_name
 
@@ -17,7 +17,7 @@ if bin/tools-upgrade; then
   git config user.email "circleci.bot@example.com"
 
   git commit -am "Upgrades Gemfile.tools dependencies"
-  git push https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -f
+  git push "https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git" -f
 
   curl -X POST                                                                                                  \
     -H "Authorization: token ${GITHUB_TOKEN}"                                                                   \

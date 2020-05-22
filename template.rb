@@ -37,7 +37,7 @@ chmod 'bin', 0o755 & ~File.umask, verbose: false
 say '=> Copying tools gemfile'
 copy_file 'lib/install/Gemfile.tools', 'Gemfile.tools'
 
-run 'yarn add -D eslint'
+run 'yarn add -D eslint jest-junit'
 
 say 'Copying lint configurations'
 copy_file 'lib/install/.better-html.yml', '.better-html.yml'
@@ -151,6 +151,8 @@ if File.exist?('config/environments/staging.rb')
   environment(r7insight_config, env: 'staging')
 end
 
+gem 'connection_pool'
+
 say '=> Set up Memcachier'
 memcachier_config = <<-CODE
   if ENV["MEMCACHIER_SERVERS"]
@@ -164,7 +166,9 @@ memcachier_config = <<-CODE
 
 CODE
 environment(memcachier_config, env: 'production')
-environment(memcachier_config, env: 'staging') if File.exist?('config/environments/staging.rb')
+if File.exist?('config/environments/staging.rb')
+  environment(memcachier_config, env: 'staging')
+end
 
 
 after_bundle do

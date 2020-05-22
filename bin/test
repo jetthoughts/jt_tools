@@ -20,7 +20,7 @@ if [[ "$TEST_APP_TEMPLATE" == "true" ]]
 then
   rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
-  rails app:template LOCATION=../template.rb
+  rails app:template LOCATION=../../template.rb
 else
   rails new test_tmpl --template ../template.rb --quiet --database postgresql
   cd test_tmpl

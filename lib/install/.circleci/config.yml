@@ -116,11 +116,8 @@ jobs:
           paths:
             - tmp/cache/jest
 
-      - run:
-          name: RSpec Tests
-          command: |
-            bin/rails db:schema:load
-            bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results.xml --format progress
+      - run: bin/rails db:schema:load
+      # rails test
 
       # collect reports
       - store_test_results:

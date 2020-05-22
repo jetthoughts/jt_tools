@@ -48,6 +48,9 @@ Layout/SpaceAroundMethodCallOperator:
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
 Lint/RaiseException:
   Enabled: true
 

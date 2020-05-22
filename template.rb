@@ -94,7 +94,7 @@ else
   )
   insert_into_file(
     '.circleci/config.yml',
-    "\n" + '      - run: bin/rails test',
+    "\n" + '      - run: bin/rails test "test/**/*_test.rb"',
     after: '# rails test'
   )
 end

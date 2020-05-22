@@ -21,7 +21,7 @@ if bin/tools-upgrade; then
 
   curl -X POST                                                                                                  \
     -H "Authorization: token ${GITHUB_TOKEN}"                                                                   \
-    -d '{"title":"Upgrade tools dependencies","base":"master","head":"'$CIRCLE_PROJECT_USERNAME':'$new_branch_name'"}' \
+    -d '{"title":"Upgrades tools dependencies","base":"master","head":"'$CIRCLE_PROJECT_USERNAME':'$new_branch_name'"}' \
     https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls
   exit 0
 else

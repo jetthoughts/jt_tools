@@ -18,7 +18,7 @@ gem uninstall oj || true
 
 if [[ "TEST_APP_TEMPLATE" == "true" ]]
 then
-  rails new test_tmpl --quiet
+  rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
   rails app:template LOCATION=../template.rb
 else
@@ -55,8 +55,8 @@ BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/
 CIRCLECI=false bin/lint-pr -f text
 
 echo " => Run git hooks verifications"
-bin/git-hooks/post-merge.sample
-CIRCLECI=false bin/git-hooks/pre-push.sample
+bin/git-hooks/post-merge
+CIRCLECI=false bin/git-hooks/pre-push
 
 bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --display-style-guide --parallel ../../lib
 node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js

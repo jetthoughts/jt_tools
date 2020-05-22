@@ -10,8 +10,8 @@ else
     maximum_coverage_drop 0.5
   end
 
-  # if ENV['CODECOV_TOKEN']
-  #   require 'codecov'
-  #   SimpleCov.formatter = SimpleCov::Formatter::Codecov
-  # end
+  if ENV['CODECOV_TOKEN']
+    require 'codecov'
+    SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  end
 end

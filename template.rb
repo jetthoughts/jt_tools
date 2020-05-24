@@ -96,6 +96,10 @@ else
     "\n" + '      - run: bin/rails test "test/**/*_test.rb"',
     after: "# rails test"
   )
+
+  gsub_file "test/test_helper.rb",
+    "parallelize(workers: :number_of_processors)",
+    "parallelize(workers: :number_of_processors) unless ENV['COVERAGE']"
 end
 
 directory "lib/install/.dependabot", ".dependabot"

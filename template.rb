@@ -126,8 +126,8 @@ end
 
 say "=> Set git hooks"
 run "git config core.hooksPath ./bin/git-hooks"
-
 say "=> Install all new dependencies"
+
 run <<~BREW_INSTALL
   hash brew 2> /dev/null \
   && (brew bundle check || brew bundle install) \
@@ -173,10 +173,12 @@ if File.exist?("config/environments/staging.rb")
   environment(memcachier_config, env: "staging")
 end
 
-after_bundle do
+Bundler.with_original_env do
   say "=> Setup default bundle config"
   run "bundle config jobs 4"
   run "bundle config retry 3"
+
+  run "bundle"
 end
 
 say "**************************************************************************"

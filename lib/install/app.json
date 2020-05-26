@@ -1,5 +1,4 @@
 {
-  "name": "APP NAME",
   "scripts": {
     "postdeploy": "bin/heroku-postdeploy"
   },

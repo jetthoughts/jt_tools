@@ -182,7 +182,7 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources
+      - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources pkg-config
 
       - run:
           name: Run Gemfile tools update in separate branch

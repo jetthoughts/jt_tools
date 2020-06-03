@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/jetthoughts/jt_tools.svg?style=svg)](https://circleci.com/gh/jetthoughts/jt_tools)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjetthoughts%2Fjt_tools?ref=badge_shield)
+[![Gem Version](https://badge.fury.io/rb/jt_tools.svg)](https://badge.fury.io/rb/jt_tools)
 
 # JetThoughts Tools
 

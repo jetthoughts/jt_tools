@@ -61,9 +61,25 @@ jobs:
 
     steps:
       - checkout
+
+      - restore_cache:
+          name: Restore Bundler Cache between Branches
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
+
       - ruby/install-deps:
           bundler-version: '`cat Gemfile.lock | tail -1 | tr -d " "`'
           key: v1-dependencies
+          with-cache: false
+          path: './vendor/bundle'
+
+      - save_cache:
+          name: Save Bundler Cache between Branches
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
       - node/install:
           node-version: latest
       - node/install-packages:
@@ -143,9 +159,9 @@ jobs:
 
       - run:
           name: Install cmake for building pronto dependencies
-          command: sudo apt-get update -qq &&
-                   sudo apt-get install -yq --no-install-recommends
-                     cmake yamllint python3-setuptools python3-pkg-resources pkg-config
+          command: sudo apt-get update -qq
+            && sudo apt-get install -yq --no-install-recommends
+            cmake yamllint python3-setuptools python3-pkg-resources pkg-config
 
       - run:
           name: Install Bundle Dependencies
@@ -182,9 +198,11 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      - run: sudo apt-get update && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources pkg-config
+      - run:
+          name: Install System Dependencies
+          command: sudo apt-get update
+            && sudo apt-get install cmake yamllint python3-setuptools python3-pkg-resources pkg-config
 
       - run:
           name: Run Gemfile tools update in separate branch
-          command: |
-            ./bin/circleci-auto_upgrade_tools
+          command: ./bin/circleci-auto_upgrade_tools

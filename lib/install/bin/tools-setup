@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-set -e
+set -eo pipefail
+
+([[ (-x "$(command -v brew)") ]] && brew bundle check || brew bundle --no-lock) \
+  || (echo "*** Please install manually system dependencies: ***" && cat Brewfile)
 
 export BUNDLE_GEMFILE=Gemfile.tools
 

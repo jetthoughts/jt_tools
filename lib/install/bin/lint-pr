@@ -4,7 +4,7 @@ set -eo pipefail
 
 reporters_opt=""
 
-if [[ "$CIRCLECI" == "true" ]]
+if [[ -n "$PRONTO_GITHUB_ACCESS_TOKEN" && "$CIRCLECI" == "true" ]]
 then
   git fetch origin master
   reporters_opt="-f github_status github_pr_review"

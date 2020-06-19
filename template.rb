@@ -130,7 +130,7 @@ say "=> Install all new dependencies"
 
 run <<~BREW_INSTALL
   hash brew 2> /dev/null \
-  && (brew bundle check || brew bundle install) \
+  && (brew bundle check || brew bundle install --no-lock) \
   || echo "Please install Homebrew: https://brew.sh/"
 BREW_INSTALL
 
@@ -180,6 +180,14 @@ Bundler.with_original_env do
 
   run "bundle"
 end
+
+uncomment_lines 'bin/setup', /system\(.*?\\byarn\b/
+
+insert_into_file(
+  "bin/setup",
+  "system!('bin/tools-setup')\n",
+  after: "system('bundle check') || system!('bundle install')\n"
+)
 
 say "**************************************************************************"
 say "**************************************************************************"

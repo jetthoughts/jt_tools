@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeo pipefail
+set -eo pipefail
 
 echo "=> Yamllint:"
 yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml

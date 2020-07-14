@@ -122,6 +122,7 @@ Bundler.with_original_env do
   say "=> Generate binstubs for linters"
   run "BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force pronto"
   run "BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force rubocop"
+  run "BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force standard"
 end
 
 say "=> Set git hooks"
@@ -181,7 +182,7 @@ Bundler.with_original_env do
   run "bundle"
 end
 
-uncomment_lines 'bin/setup', /system\(.*?\\byarn\b/
+uncomment_lines "bin/setup", /system\(.*?\\byarn\b/
 
 insert_into_file(
   "bin/setup",

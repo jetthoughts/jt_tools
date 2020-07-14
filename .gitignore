@@ -39,3 +39,4 @@ pkg
 
 # Temp files
 /tmp/
+.rubocop-*

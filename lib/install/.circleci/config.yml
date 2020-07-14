@@ -7,8 +7,8 @@
 version: 2.1
 
 orbs:
-  ruby: circleci/ruby@1.0.0
-  node: circleci/node@2.1.1
+  ruby: circleci/ruby@1.0.5
+  node: circleci/node@3.0.1
 
 workflows:
   version: 2
@@ -80,12 +80,9 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - node/install:
-          node-version: latest
       - node/install-packages:
           app-dir: .
           pkg-manager: yarn
-          cache-key: yarn.lock
           cache-version: v1
 
       - restore_cache:
@@ -93,7 +90,7 @@ jobs:
             - asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
             - asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}-
             - asset-cache-v1-{{ arch }}-{{ .Branch }}-
-            - asset-cache-v1-
+            - asset-cache-v1-{{ arch }}-master-
 
       - run:
           name: Precompile Assets

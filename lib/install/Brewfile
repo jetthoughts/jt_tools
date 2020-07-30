@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-tap "caskroom/cask"
-cask_args appdir: "/Applications"
-
 tap "heroku/brew"
 
 brew "circleci"

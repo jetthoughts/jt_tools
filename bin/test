@@ -2,7 +2,8 @@
 
 set -eo pipefail
 
-echo "=> Yamllint:"
+echo ""
+echo "== Yamllint: =="
 yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
 yamllint --config-file lib/install/.yamllint.yml --strict *.yml
 yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
@@ -20,21 +21,25 @@ if [[ "$TEST_APP_TEMPLATE" == "true" ]]
 then
   rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
-  rails app:template LOCATION=../../template.rb
+  bin/setup
+  bin/rails app:template LOCATION="../../template.rb"
 else
   rails new test_tmpl --template ../template.rb --quiet --database postgresql
   cd test_tmpl
-  DISABLE_SPRING=1 bin/setup
+  bin/setup
 fi
 
-echo " => Verify CircleCI config:"
+echo ""
+echo "== Verify CircleCI config =="
 circleci config validate
 
-echo " => Verify installation scripts:"
+echo ""
+echo "== Verify installation scripts =="
 bin/tools-setup
 bin/tools-upgrade
 
-echo " => Verify linters setup:"
+echo ""
+echo "== Verify linters setup =="
 
 git add .
 git commit -m 'Initial Commit'
@@ -55,7 +60,8 @@ BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec rails_best_practices --without-colo
 
 CIRCLECI=false bin/lint-pr -f text
 
-echo " => Run git hooks verifications"
+echo ""
+echo "== Run git hooks verifications =="
 bin/git-hooks/post-merge
 CIRCLECI=false bin/git-hooks/pre-push
 

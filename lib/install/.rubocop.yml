@@ -1,11 +1,10 @@
 ---
 require:
-  - rubocop-performance
-  - rubocop-rails
   - standard
+  - rubocop-rails
 
-inherit_from:
-  - https://raw.githubusercontent.com/testdouble/standard/master/config/base.yml
+inherit_gem:
+  standard: config/base.yml
 
 AllCops:
   TargetRubyVersion: 2.7

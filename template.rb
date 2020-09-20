@@ -102,7 +102,7 @@ else
     "parallelize(workers: :number_of_processors) unless ENV['COVERAGE']"
 end
 
-directory "lib/install/.dependabot", ".dependabot"
+directory "lib/install/.github", ".github"
 
 say "=> Copying heroku configuration"
 copy_file "lib/install/app.json", "app.json"

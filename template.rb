@@ -187,7 +187,7 @@ uncomment_lines "bin/setup", /system\(.*?\\byarn\b/
 insert_into_file(
   "bin/setup",
   "system!('bin/tools-setup')\n",
-  after: "system('bundle check') || system!('bundle install')\n"
+  after: "system!('bin/yarn')\n"
 )
 
 say "**************************************************************************"

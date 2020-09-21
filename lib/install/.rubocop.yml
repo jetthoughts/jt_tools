@@ -94,7 +94,7 @@ Rails:
   Enabled: true
 
 Rails/SkipsModelValidations:
-  Blacklist: []
+  Enabled: false
 
 Rails/UnknownEnv:
   Environments:

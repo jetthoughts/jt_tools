@@ -102,7 +102,9 @@ else
     "parallelize(workers: :number_of_processors) unless ENV['COVERAGE']"
 end
 
+say "=> Copying git configuration"
 directory "lib/install/.github", ".github"
+copy_file "lib/install/.gitattributes", ".gitattributes"
 
 say "=> Copying heroku configuration"
 copy_file "lib/install/app.json", "app.json"

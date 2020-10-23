@@ -1,0 +1,7 @@
+*.gemspec diff=ruby
+*.rake    diff=ruby
+*.rb      diff=ruby
+*.js      diff=javascript
+
+/Gemfile.lock merge=ours
+

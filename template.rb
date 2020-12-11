@@ -189,7 +189,7 @@ uncomment_lines 'bin/setup', /bin\/yarn/
 insert_into_file(
   "bin/setup",
   "system!('bin/tools-setup')\n",
-  after: "system!('bin/yarn')\n"
+  after: "system! 'bin/yarn'\n"
 )
 
 say "**************************************************************************"

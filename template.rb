@@ -184,7 +184,7 @@ Bundler.with_original_env do
   run "bundle"
 end
 
-uncomment_lines "bin/setup", /system\(.*?\\byarn\b/
+uncomment_lines 'bin/setup', /bin\/yarn/
 
 insert_into_file(
   "bin/setup",

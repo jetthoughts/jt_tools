@@ -104,7 +104,19 @@ end
 
 say "=> Copying git configuration"
 directory "lib/install/.github", ".github"
-insert_into_file '.gitattributes', File.open("lib/install/.gitattributes").read.strip
+gitattributes = <<-CODE
+  *.gemspec diff=ruby
+  *.rake    diff=ruby
+  *.rb      diff=ruby
+  *.js      diff=javascript
+
+  db/schema.rb merge=ours diff=ruby
+  yarn.lock merge=ours
+  Gemfile.lock merge=ours
+
+  vendor/* linguist-vendored
+CODE
+insert_into_file '.gitattributes', gitattributes
 
 say "=> Copying heroku configuration"
 copy_file "lib/install/app.json", "app.json"

@@ -104,7 +104,7 @@ end
 
 say "=> Copying git configuration"
 directory "lib/install/.github", ".github"
-copy_file "lib/install/.gitattributes", ".gitattributes"
+insert_into_file '.gitattributes', File.open("lib/install/.gitattributes").read.strip
 
 say "=> Copying heroku configuration"
 copy_file "lib/install/app.json", "app.json"

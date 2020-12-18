@@ -105,16 +105,17 @@ end
 say "=> Copying git configuration"
 directory "lib/install/.github", ".github"
 gitattributes = <<-CODE
-  *.gemspec diff=ruby
-  *.rake    diff=ruby
-  *.rb      diff=ruby
-  *.js      diff=javascript
 
-  db/schema.rb merge=ours diff=ruby
-  yarn.lock merge=ours
-  Gemfile.lock merge=ours
+*.gemspec diff=ruby
+*.rake    diff=ruby
+*.rb      diff=ruby
+*.js      diff=javascript
 
-  vendor/* linguist-vendored
+db/schema.rb merge=ours diff=ruby
+yarn.lock merge=ours
+Gemfile.lock merge=ours
+
+vendor/* linguist-vendored
 CODE
 insert_into_file '.gitattributes', gitattributes
 

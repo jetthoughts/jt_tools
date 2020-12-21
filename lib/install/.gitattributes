@@ -3,8 +3,8 @@
 *.rb      diff=ruby
 *.js      diff=javascript
 
-/db/schema.rb merge=ours diff=ruby
-/yarn.lock merge=ours
-/Gemfile.lock merge=ours
+db/schema.rb merge=ours diff=ruby
+yarn.lock merge=ours
+Gemfile.lock merge=ours
 
-/vendor/* linguist-vendored
+vendor/* linguist-vendored

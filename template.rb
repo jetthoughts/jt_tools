@@ -104,7 +104,8 @@ end
 
 say "=> Copying git configuration"
 directory "lib/install/.github", ".github"
-gitattributes = <<-CODE
+if Gem::Version.new(Rails.version) >= Gem::Version.new('6.1.0')
+  gitattributes = <<~GITATTRIBUTES
   *.gemspec diff=ruby
   *.rake    diff=ruby
   *.rb      diff=ruby
@@ -113,8 +114,11 @@ gitattributes = <<-CODE
   db/schema.rb merge=ours diff=ruby
   yarn.lock merge=ours
   Gemfile.lock merge=ours linguist-generated
-CODE
-insert_into_file '.gitattributes', gitattributes
+  GITATTRIBUTES
+  insert_into_file '.gitattributes', gitattributes
+else
+  copy_file "lib/install/.gitattributes", ".gitattributes"
+end
 
 say "=> Copying heroku configuration"
 copy_file "lib/install/app.json", "app.json"

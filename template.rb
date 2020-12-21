@@ -113,8 +113,6 @@ gitattributes = <<-CODE
   db/schema.rb merge=ours diff=ruby
   yarn.lock merge=ours
   Gemfile.lock merge=ours linguist-generated
-
-  vendor/* linguist-vendored
 CODE
 insert_into_file '.gitattributes', gitattributes
 

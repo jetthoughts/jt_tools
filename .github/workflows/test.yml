@@ -59,6 +59,7 @@ jobs:
           --health-retries 5
 
     steps:
+      - run: pwd
       - name: Checkout code
         uses: actions/checkout@v2
 

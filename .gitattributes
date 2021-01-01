@@ -3,5 +3,9 @@
 *.rb      diff=ruby
 *.js      diff=javascript
 
-/Gemfile.lock merge=ours
+db/schema.rb merge=ours diff=ruby linguist-generated
+yarn.lock merge=ours linguist-generated
+Gemfile.lock merge=ours linguist-generated
 
+vendor/*  linguist-vendored
+bin/* linguist-generated

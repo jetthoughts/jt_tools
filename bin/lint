@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ./*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ./**/.*/*.yml
+
+bin/rubocop

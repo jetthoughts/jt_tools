@@ -33,6 +33,8 @@ jobs:
 
   test:
     name: Functional testing
+    env:
+      DATABASE_URL: postgresql://postgres_user:postgres@localhost:5432/postgres_db
 
     strategy:
       matrix:
@@ -40,6 +42,21 @@ jobs:
       fail-fast: true
 
     runs-on: ${{ matrix.os-version }}
+
+    services:
+      postgres:
+        image: postgres # circleci/postgres:alpine-ram
+        env:
+          POSTGRES_DB: postgres_db
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code

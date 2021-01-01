@@ -8,7 +8,7 @@ ruby '3.0.0'
 gemspec
 
 gem 'bump'
-gem 'rubocop-minitest'
-gem 'rubocop-performance'
-gem 'rubocop-rails'
-gem 'standard'
+gem 'rubocop-minitest', require: false
+gem 'rubocop-performance', require: false
+gem 'rubocop-rails', require: false
+gem 'standard', '>= 0.4.7', require: false

@@ -29,6 +29,11 @@ jobs:
           with-cache: false
           path: /home/circleci/project/vendor/bundle
 
+      - node/install-packages:
+          app-dir: .
+          pkg-manager: yarn
+          cache-version: v1
+
       - run: |
           [[ $CIRCLE_NODE_INDEX == "0" ]] || bin/ci-test
       - run: |
@@ -42,6 +47,7 @@ jobs:
             - /home/circleci/.cache
 
 orbs:
+  node: circleci/node@4
   ruby: circleci/ruby@1
 
 workflows:

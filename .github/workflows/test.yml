@@ -10,7 +10,6 @@ on:
       - master
 
 env:
-  NOKOGIRI_USE_SYSTEM_LIBRARIES: true
   DEBIAN_FRONTEND: noninteractive
 
 jobs:

@@ -77,6 +77,8 @@ jobs:
         with:
           node-version: 14
 
+      - run: yarn install
+
       - name: Disable Linuxbrew
         run: |
           [[ $(uname -s) == "Linux"* ]] && sudo rm -rf $(which brew)

@@ -2,13 +2,21 @@
 
 set -eo pipefail
 
+export BUNDLE_PATH="$(pwd)/vendor/bundle"
+mkdir -p "$BUNDLE_PATH"
+
+bundle check || bundle install
+
 echo ""
 echo "== Lint: =="
 bin/lint
 
-mkdir -p tmp/
+target_dir=${1:-$(mktemp -d)}
+template_path="$(pwd)/template.rb"
 
-cd tmp
+mkdir -p "$target_dir"
+
+cd "$target_dir"
 rm -rf test_tmpl
 
 # Test installation of missed gems on applying template
@@ -20,10 +28,10 @@ then
   rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
   bin/setup
-  bin/rails app:template LOCATION="../../template.rb"
+  bin/rails app:template LOCATION="${template_path}"
 else
   echo "Generate app with template"
-  rails new test_tmpl --template ../template.rb --quiet --database postgresql
+  rails new test_tmpl --template "${template_path}" --quiet --database postgresql
   cd test_tmpl
   bin/setup
 fi
@@ -54,8 +62,6 @@ git commit -m 'Adds sample_for_linters'
 bin/rubocop --fail-level F sample_for_linters.rb
 bin/pronto run -c HEAD~1 --no-exit-code
 BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec rails_best_practices --without-color --silent --test .
-# FIXME: https://github.com/Shopify/erb-lint/issues/162
-# BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/.erb-lint.yml --autocorrect .
 
 CIRCLECI=false bin/lint-pr -f text
 
@@ -63,9 +69,6 @@ echo ""
 echo "== Run git hooks verifications =="
 bin/git-hooks/post-merge
 CIRCLECI=false bin/git-hooks/pre-push
-
-bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --display-style-guide --parallel ../../lib
-node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js
 
 # For local run only
 if [[ -z "$CIRCLECI" ]]

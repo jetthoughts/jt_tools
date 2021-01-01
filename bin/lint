@@ -7,4 +7,6 @@ yamllint --config-file lib/install/.yamllint.yml --strict ./*.yml
 yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
 yamllint --config-file lib/install/.yamllint.yml --strict ./**/.*/*.yml
 
-bundle exec rubocop -P
+node_modules/.bin/eslint --config lib/install/.eslintrc.js --quiet --no-color lib/**/.*.js
+
+bundle exec rubocop --debug --extra-details --display-style-guide --parallel

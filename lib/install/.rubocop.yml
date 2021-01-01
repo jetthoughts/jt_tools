@@ -1,15 +1,19 @@
 ---
 require:
-  - standard
+  - rubocop-minitest
   - rubocop-rails
+  - rubocop-performance
+  - standard
 
 inherit_gem:
   standard: config/base.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  NewCops: enable
+  TargetRubyVersion: 3.0
 
   Exclude:
+    - 'bin/**/*'
     - 'db/migrate/**/*'
     - 'db/schema.rb'
     - 'vendor/**/*'
@@ -63,6 +67,13 @@ Naming/PredicateName:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
+Standard/SemanticBlocks:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: braces_for_chaining
+
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/**/*.rb'
@@ -70,23 +81,15 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Style/ExponentialNotation:
-  Enabled: true
-
 Style/FrozenStringLiteralComment:
   Enabled: true
 
 Style/HashEachMethods:
   Enabled: true
 
-Style/HashTransformKeys:
+Style/StringLiterals:
   Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Style/SlicingWithRange:
-  Enabled: true
+  EnforcedStyle: single_quotes
 
 # Rails
 

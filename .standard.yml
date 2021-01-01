@@ -2,9 +2,13 @@ default_ignores: false
 #fix: true
 format: progress
 parallel: true
-ruby_version: 2.7.1
+ruby_version: 3.0
 
 ignore:
+  - '**/*':
+      - Standard/SemanticBlocks
+  - 'db/schema.rb'
   - 'test/**/*':
       - Layout/AlignHash
   - 'tmp/**/*'
+  - 'vendor/**/*'

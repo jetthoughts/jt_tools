@@ -7,6 +7,6 @@ set -eo pipefail
 
 export BUNDLE_GEMFILE=Gemfile.tools
 
-bundle update --jobs=4 --retry=3
+bundle update --jobs=4 --retry=3 --all
 
-yarn check || yarn install
+yarn check || yarn upgrade

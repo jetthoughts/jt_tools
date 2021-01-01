@@ -1,0 +1,84 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  pull_request_target:
+    branches:
+      - master
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+  CIRCLECI: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Run standard Ruby linter
+        run: bundle exec rubocop -P -c ./.rubocop.yml ./
+
+  test:
+    name: Functional testing
+    env:
+      DATABASE_URL: postgresql://postgres_user:postgres@localhost:5432/postgres_db
+
+    strategy:
+      matrix:
+        os-version: [ 'ubuntu-20.04', 'ubuntu-latest' ]
+      fail-fast: true
+
+    runs-on: ${{ matrix.os-version }}
+
+    services:
+      postgres:
+        image: postgres # circleci/postgres:alpine-ram
+        env:
+          POSTGRES_DB: postgres_db
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get -yqq install libpq-dev
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Disable Linuxbrew
+        run: |
+          [[ $(uname -s) == "Linux"* ]] && sudo rm -rf $(which brew)
+
+      - name: Run Tests
+        run: bin/ci-test

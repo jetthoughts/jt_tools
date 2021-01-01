@@ -3,11 +3,8 @@
 set -eo pipefail
 
 echo ""
-echo "== Yamllint: =="
-yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict *.yml
-yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict **/.*/*.yml
+echo "== Lint: =="
+bin/lint
 
 mkdir -p tmp/
 
@@ -15,16 +12,18 @@ cd tmp
 rm -rf test_tmpl
 
 # Test installation of missed gems on applying template
-gem uninstall oj || true
+gem uninstall --force --silent oj || true
 
 if [[ "$TEST_APP_TEMPLATE" == "true" ]]
 then
-  rails new test_tmpl --quiet --database postgresql --skip-webpack-install
+  echo "Adds template to existed app"
+  rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
   bin/setup
   bin/rails app:template LOCATION="../../template.rb"
 else
-  rails new test_tmpl --template ../template.rb --quiet --database postgresql --skip-webpack-install
+  echo "Generate app with template"
+  rails new test_tmpl --template ../template.rb --quiet --database postgresql
   cd test_tmpl
   bin/setup
 fi
@@ -67,3 +66,9 @@ CIRCLECI=false bin/git-hooks/pre-push
 
 bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --display-style-guide --parallel ../../lib
 node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js
+
+# For local run only
+if [[ -z "$CIRCLECI" ]]
+then
+  circleci local execute --job test --config .circleci/config.yml
+fi

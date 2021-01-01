@@ -6,6 +6,7 @@ export BUNDLE_PATH="$(pwd)/vendor/bundle"
 mkdir -p "$BUNDLE_PATH"
 
 bundle check || bundle install
+yarn check || yarn install
 
 echo ""
 echo "== Lint: =="

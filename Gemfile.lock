@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jt_tools (0.0.15)
+    jt_tools (0.0.16)
       railties (>= 4.2)
 
 GEM

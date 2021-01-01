@@ -2,11 +2,10 @@
 
 set -eo pipefail
 
-([[ (-x "$(command -v brew)") ]] && brew bundle check || brew bundle --no-lock) \
+([[ $(uname -s) == Darwin* ]] && [[ (-x "$(command -v brew)") ]] && brew bundle check || brew bundle --no-lock) \
   || (echo "*** Please install manually system dependencies: ***" && cat Brewfile)
 
 export BUNDLE_GEMFILE=Gemfile.tools
-
 
 [[ (-z "$(command -v bundle)") ]] && gem install --conservative bundler
 

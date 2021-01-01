@@ -27,6 +27,7 @@ jobs:
       - ruby/install-deps:
           key: v1-dependencies
           with-cache: false
+          path: /home/circleci/project/vendor/bundle
 
       - run: |
           [[ $CIRCLE_NODE_INDEX == "0" ]] || bin/ci-test

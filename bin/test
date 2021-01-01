@@ -5,9 +5,9 @@ set -eo pipefail
 echo ""
 echo "== Yamllint: =="
 yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict *.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ./*.yml
 yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict **/.*/*.yml
+yamllint --config-file lib/install/.yamllint.yml --strict ./**/.*/*.yml
 
 mkdir -p tmp/
 
@@ -15,16 +15,18 @@ cd tmp
 rm -rf test_tmpl
 
 # Test installation of missed gems on applying template
-gem uninstall oj || true
+gem uninstall --force --silent oj || true
 
 if [[ "$TEST_APP_TEMPLATE" == "true" ]]
 then
-  rails new test_tmpl --quiet --database postgresql --skip-webpack-install
+  echo "Adds template to existed app"
+  rails new test_tmpl --quiet --database postgresql
   cd test_tmpl
   bin/setup
   bin/rails app:template LOCATION="../../template.rb"
 else
-  rails new test_tmpl --template ../template.rb --quiet --database postgresql --skip-webpack-install
+  echo "Generate app with template"
+  rails new test_tmpl --template ../template.rb --quiet --database postgresql
   cd test_tmpl
   bin/setup
 fi
@@ -53,7 +55,7 @@ git add .
 git commit -m 'Adds sample_for_linters'
 
 bin/rubocop --fail-level F sample_for_linters.rb
-bin/pronto run -c HEAD~1 --no-exit-code
+bin/pronto run -c HEAD~1 --no-exit-code >> ../../log/development.log
 BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec rails_best_practices --without-color --silent --test .
 # FIXME: https://github.com/Shopify/erb-lint/issues/162
 # BUNDLE_GEMFILE=Gemfile.tools bin/bundle exec erblint --config ../../lib/install/.erb-lint.yml --autocorrect .
@@ -67,3 +69,6 @@ CIRCLECI=false bin/git-hooks/pre-push
 
 bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --display-style-guide --parallel ../../lib
 node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js
+
+# For local run only
+[[ -z "$CIRCLECI" ]] && circleci local execute --job test --config .circleci/config.yml

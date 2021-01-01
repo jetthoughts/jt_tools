@@ -7,8 +7,9 @@
 version: 2.1
 
 orbs:
-  ruby: circleci/ruby@1.1.1
-  node: circleci/node@4.0.0
+  browser-tools: circleci/browser-tools@1.1.1
+  node: circleci/node@4
+  ruby: circleci/ruby@1
 
 workflows:
   version: 2
@@ -38,7 +39,7 @@ jobs:
   test:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.7-node-browsers
+      - image: cimg/ruby:3.0-browsers
         environment:
           BUNDLE_GEMFILE: Gemfile
           BUNDLE_PATH: vendor/bundle
@@ -61,6 +62,8 @@ jobs:
 
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
       - restore_cache:
           name: Restore Bundler Cache between Branches
@@ -74,10 +77,14 @@ jobs:
           with-cache: false
           path: './vendor/bundle'
 
+      - run:  bundle exec bootsnap precompile --gemfile app/ lib/
+      - run:  gem install spring
+
       - save_cache:
           name: Save Bundler Cache between Branches
           paths:
-            - ./vendor/bundle
+            - vendor/bundle
+            - tmp/cache/bootsnap-compile-cache
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       - node/install-packages:
@@ -106,31 +113,32 @@ jobs:
             - tmp/cache/assets
             - tmp/cache/webpacker
 
-      - restore_cache:
-          name: Restore Jest Cache
-          keys:
-            - jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-            - jest-cache-v1-{{ arch }}-{{ .Branch }}-
-            - jest-cache-v1-
+#      # Run JS Tests
+#      - restore_cache:
+#          name: Restore Jest Cache
+#          keys:
+#            - jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+#            - jest-cache-v1-{{ arch }}-{{ .Branch }}-
+#            - jest-cache-v1-
+#
+#      - run:
+#          name: JavaScript Unit Tests
+#          command: |
+#            bin/yarn test --ci --no-watchman \
+#              --coverage --coverageDirectory coverage/jest \
+#              --coverageReporters text-summary --coverageReporters html \
+#              --reporters=jest-junit
+#          environment:
+#            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results
+#
+#      - save_cache:
+#          name: Save Jest Cache
+#          key: jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+#          paths:
+#            - tmp/cache/jest
 
-      - run:
-          name: JavaScript Unit Tests
-          command: |
-            bin/yarn test --ci --no-watchman \
-              --coverage --coverageDirectory coverage/jest \
-              --coverageReporters text-summary --coverageReporters html \
-              --reporters=jest-junit
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results
-
-      - save_cache:
-          name: Save Jest Cache
-          key: jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - tmp/cache/jest
-
-      - run: bin/rails db:schema:load
-      # rails test
+      - run: bin/rails db:test:prepare
+      - run: bin/rails test "test/**/*_test.rb"
 
       # collect reports
       - store_test_results:
@@ -139,10 +147,11 @@ jobs:
           path: ./coverage
   lint:
     docker:
-      - image: cimg/ruby:2.7-node
+      - image: cimg/ruby:3.0-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools
+          BUNDLE_PATH: vendor/bundle-tools
           BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
 
@@ -162,7 +171,7 @@ jobs:
 
       - run:
           name: Install Bundle Dependencies
-          command: bin/bundle check --path vendor/bundle-tools || bin/bundle install --path vendor/bundle-tools
+          command: bin/bundle check || bin/bundle install
 
       - run:
           name: Install Node Packages
@@ -178,7 +187,7 @@ jobs:
 
   upgrade_tools:
     docker:
-      - image: cimg/ruby:2.7-node
+      - image: cimg/ruby:3.0-node
         environment:
           DISABLE_SPRING: 1
           BUNDLE_GEMFILE: Gemfile.tools

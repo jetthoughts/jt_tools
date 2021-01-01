@@ -7,6 +7,9 @@ set -eo pipefail
 
 export BUNDLE_GEMFILE=Gemfile.tools
 
+
+[[ (-z "$(command -v bundle)") ]] && gem install --conservative bundler
+
 bundle check || bundle install --jobs=4 --retry=3
 
 yarn check || yarn install

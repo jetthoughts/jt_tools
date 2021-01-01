@@ -1,0 +1,55 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  pull_request_target:
+    branches:
+      - master
+
+env:
+  NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Run standard Ruby linter
+        run: bundle exec rubocop -P -c lib/install/.rubocop.yml
+
+  test:
+    name: Functional testing
+
+    strategy:
+      matrix:
+        os-version: [ 'ubuntu-20.04', 'ubuntu-latest' ]
+      fail-fast: true
+
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Run Tests
+        run: bin/ci-test

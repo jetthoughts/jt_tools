@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -10,19 +8,22 @@ end
 gem 'oj'
 
 group :tools do
-  gem 'pronto'
+  gem 'pronto', require: false
   gem 'pronto-blacklist', require: false
   gem 'pronto-erb_lint', require: false
   gem 'pronto-eslint_npm', require: false
   gem 'pronto-fasterer', require: false
   gem 'pronto-rails_best_practices', require: false
   gem 'pronto-reek', require: false
-  gem 'pronto-rubocop', require: false
+  gem 'pronto-rubocop', require: false, github: 'prontolabs/pronto-rubocop'
   # gem 'pronto-standardrb', require: false
   gem 'pronto-yamllint', require: false
 
-  # gem 'rubocop-minitest', require: false
+  gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
-  # gem 'rubocop-rspec', require: false
+  gem 'rubocop-minitest', require: false
+
   gem 'standard', '>= 0.4.7', require: false
+  # gem 'pronto-standardrb', require: false
+  # gem 'rubocop-rspec', require: false
 end

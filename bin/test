@@ -3,11 +3,8 @@
 set -eo pipefail
 
 echo ""
-echo "== Yamllint: =="
-yamllint --config-file lib/install/.yamllint.yml --strict .*/*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict ./*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict lib/**/.*.yml
-yamllint --config-file lib/install/.yamllint.yml --strict ./**/.*/*.yml
+echo "== Lint: =="
+bin/lint
 
 mkdir -p tmp/
 

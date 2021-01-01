@@ -24,6 +24,12 @@ jobs:
             - rails-v2-{{ arch }}-
             - rails-v2-
 
+      - ruby/install-deps:
+          bundler-version: '`cat Gemfile.lock | tail -1 | tr -d " "`'
+          key: v1-dependencies
+          with-cache: true
+          path: './vendor/bundle'
+
       - run: |
           [[ $CIRCLE_NODE_INDEX == "0" ]] || bin/ci-test
       - run: |
@@ -35,6 +41,9 @@ jobs:
             - /home/circleci/project/vendor/bundle
             - /home/circleci/.rubygems
             - /home/circleci/.cache
+
+orbs:
+  ruby: circleci/ruby@1
 
 workflows:
   test:

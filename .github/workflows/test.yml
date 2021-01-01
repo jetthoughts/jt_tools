@@ -38,7 +38,7 @@ jobs:
 
     strategy:
       matrix:
-        os-version: [ 'ubuntu-20.04', 'ubuntu-latest' ]
+        os-version: [ 'ubuntu-20.04', 'ubuntu-18.04' ]
       fail-fast: true
 
     runs-on: ${{ matrix.os-version }}

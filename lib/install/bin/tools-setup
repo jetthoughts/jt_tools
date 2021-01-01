@@ -5,7 +5,7 @@ set -eo pipefail
 echo "Debug Platform detection:"
 uname -s
 
-([[ $(uname -s) == "Darwin"* ]] && [[ (-x "$(command -v brew)") ]] && brew bundle check || brew bundle --no-lock) \
+([[ (-x "$(command -v brew)") ]] && brew bundle check || brew bundle --no-lock) \
   || (echo "*** Please install manually system dependencies: ***" && cat Brewfile)
 
 export BUNDLE_GEMFILE=Gemfile.tools

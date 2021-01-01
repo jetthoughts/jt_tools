@@ -51,5 +51,9 @@ jobs:
           ruby-version: '3.0'
           bundler-cache: true
 
+      - name: Disable Linuxbrew
+        run: |
+          [[ $(uname -s) == "Linux"* ]] && sudo rm -rf $(which brew)
+
       - name: Run Tests
         run: bin/ci-test

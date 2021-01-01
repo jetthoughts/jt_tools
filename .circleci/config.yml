@@ -45,9 +45,20 @@ orbs:
   ruby: circleci/ruby@1
 
 workflows:
-  test:
+  commit:
     jobs:
-      - test
+      - hold:
+          type: approval
+      - test:
+          requires:
+            - hold
+  merge:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - master
 
   daily:
     triggers:
@@ -58,8 +69,4 @@ workflows:
               only:
                 - master
     jobs:
-      - hold:
-          type: approval
-      - test:
-          requires:
-            - hold
+      - test

@@ -77,8 +77,8 @@ jobs:
           with-cache: false
           path: './vendor/bundle'
 
-      - run:  bundle exec bootsnap precompile --gemfile app/ lib/
-      - run:  gem install spring
+      - run: bundle exec bootsnap precompile --gemfile app/ lib/
+      - run: gem install spring
 
       - save_cache:
           name: Save Bundler Cache between Branches
@@ -113,34 +113,34 @@ jobs:
             - tmp/cache/assets
             - tmp/cache/webpacker
 
-#      # Run JS Tests
-#      - restore_cache:
-#          name: Restore Jest Cache
-#          keys:
-#            - jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-#            - jest-cache-v1-{{ arch }}-{{ .Branch }}-
-#            - jest-cache-v1-
-#
-#      - run:
-#          name: JavaScript Unit Tests
-#          command: |
-#            bin/yarn test --ci --no-watchman \
-#              --coverage --coverageDirectory coverage/jest \
-#              --coverageReporters text-summary --coverageReporters html \
-#              --reporters=jest-junit
-#          environment:
-#            JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results
-#
-#      - save_cache:
-#          name: Save Jest Cache
-#          key: jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-#          paths:
-#            - tmp/cache/jest
+      # Run JS Tests
+      # - restore_cache:
+      #     name: Restore Jest Cache
+      #     keys:
+      #       - jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+      #       - jest-cache-v1-{{ arch }}-{{ .Branch }}-
+      #       - jest-cache-v1-
+      #
+      # - run:
+      #     name: JavaScript Unit Tests
+      #     command: |
+      #       bin/yarn test --ci --no-watchman \
+      #         --coverage --coverageDirectory coverage/jest \
+      #         --coverageReporters text-summary --coverageReporters html \
+      #         --reporters=jest-junit
+      #     environment:
+      #       JEST_JUNIT_OUTPUT_DIR: tmp/reports/jest-results
+      #
+      # - save_cache:
+      #     name: Save Jest Cache
+      #     key: jest-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+      #     paths:
+      #       - tmp/cache/jest
 
       - run: bin/rails db:test:prepare
       - run: bin/rails test "test/**/*_test.rb"
 
-      # collect reports
+      # Collect reports
       - store_test_results:
           path: ./tmp/reports/
       - store_artifacts:

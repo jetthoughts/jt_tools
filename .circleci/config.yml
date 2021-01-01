@@ -50,4 +50,8 @@ workflows:
               only:
                 - master
     jobs:
+      - hold:
+          type: approval
       - test
+        requires:
+          - hold

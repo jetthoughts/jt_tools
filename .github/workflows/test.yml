@@ -62,11 +62,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install PostgreSQL 11 client
+          run: |
+            sudo apt-get -yqq install libpq-dev
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
           bundler-cache: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
 
       - name: Disable Linuxbrew
         run: |

@@ -71,4 +71,7 @@ bin/rubocop --config ../../lib/install/.rubocop.yml --debug --extra-details --di
 node_modules/.bin/eslint --config ../../lib/install/.eslintrc.js --quiet --no-color ../../lib/**/.*.js
 
 # For local run only
-[[ -z "$CIRCLECI" ]] && circleci local execute --job test --config .circleci/config.yml
+if [[ -z "$CIRCLECI" ]]
+then
+  circleci local execute --job test --config .circleci/config.yml
+fi

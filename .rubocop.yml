@@ -1,0 +1,10 @@
+---
+inherit_from: lib/install/.rubocop.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+
+  Exclude:
+    - 'bin/**/*'
+    - 'template.rb'

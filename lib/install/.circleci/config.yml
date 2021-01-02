@@ -138,7 +138,9 @@ jobs:
       #       - tmp/cache/jest
 
       - run: bin/rails db:test:prepare
+
       - run: bin/rails test "test/**/*_test.rb"
+      # - run: bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results.xml --format progress
 
       # Collect reports
       - store_test_results:

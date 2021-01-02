@@ -80,12 +80,6 @@ if File.read('Gemfile').include? 'rspec'
     "require 'simplecov' if ENV['COVERAGE']\n",
     after: /\A/
   )
-  insert_into_file(
-    '.circleci/config.yml',
-    "\n" \
-    '      - run: bin/rspec --format RspecJunitFormatter --out tmp/reports/rspec-results.xml --format progress',
-    after: '# rails test'
-  )
 else
   gem 'minitest-ci', require: false, group: :test
   insert_into_file(
@@ -93,12 +87,6 @@ else
     "require 'simplecov' if ENV['COVERAGE']\n",
     after: /\A/
   )
-  insert_into_file(
-    '.circleci/config.yml',
-    "\n" + '      - run: bin/rails test "test/**/*_test.rb"',
-    after: '# rails test'
-  )
-
   gsub_file 'test/test_helper.rb',
     'parallelize(workers: :number_of_processors)',
     "parallelize(workers: :number_of_processors) unless ENV['COVERAGE']"

@@ -124,6 +124,7 @@ require 'bundler'
 Bundler.with_original_env do
   say '=> Install tools'
   run 'bin/tools-setup'
+  run 'BUNDLE_GEMFILE=Gemfile.tools bundle lock --add-platform x86_64-linux'
 
   say '=> Generate binstubs for linters'
   run 'BUNDLE_GEMFILE=Gemfile.tools bundle binstub --force pronto'

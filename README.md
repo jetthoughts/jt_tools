@@ -20,6 +20,7 @@ More details could be found in such posts:
 Pre-setup for service 
 
 * [GitHub](https://github.com)
+  * GitHub Actions
 * [Heroku](https://jtway.co/make-master-stable-again-b15c9ff3b129) (Heroku Reviews Apps)
   * [MemCachier](https://www.memcachier.com/)
 * [CircleCI](https://circleci.com/)

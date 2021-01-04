@@ -8,6 +8,8 @@
 Ruby on Rails Continious Deployemnt ecosystem to maintain projects without losing your mind.
 Automatization scripts and services integrations which make your product world class level with no effort!
 
+**Allow for Remote Distributed Teams to Work with Automotized Delivery**
+
 More details could be found in such posts:
 
 * [How to Setup a Project That Can Host Up to 1000 Users for Free](https://jtway.co/how-to-setup-a-project-that-can-host-up-to-1000-users-for-free-ab59ad3edaf1)

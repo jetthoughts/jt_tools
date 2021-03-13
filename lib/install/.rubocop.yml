@@ -67,10 +67,7 @@ Naming/PredicateName:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-Standard/SemanticBlocks:
-  Enabled: false
-
-Style/BlockDelimiters:
+Standard/BlockDelimiters:
   Enabled: true
   EnforcedStyle: braces_for_chaining
 

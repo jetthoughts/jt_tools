@@ -7,3 +7,6 @@ comment:
   layout: 'diff, flags, files'
   behavior: 'once'
   require_changes: false
+  
+ignore:
+  - 'lib/rails'

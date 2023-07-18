@@ -7,6 +7,13 @@ comment:
   layout: 'diff, flags, files'
   behavior: 'once'
   require_changes: false
-  
+
 ignore:
-  - 'lib/rails'
+  - app/views
+  - bin
+  - lib/jumpstart
+  - lib/rails
+  - lib/templates
+  - log
+  - test
+  - vendor

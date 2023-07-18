@@ -11,7 +11,6 @@ comment:
 ignore:
   - app/views
   - bin
-  - lib/jumpstart
   - lib/rails
   - lib/templates
   - log

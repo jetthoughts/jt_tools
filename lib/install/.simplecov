@@ -14,7 +14,7 @@ if defined?(Spring) && ENV['DISABLE_SPRING'].nil?
 else
   SimpleCov.start 'rails' do
     add_filter %w[
-      app/views lib/jumpstart lib/rails lib/templates
+      app/views lib/rails lib/templates
       bin coverage log test vendor node_modules db doc public storage tmp
     ]
 

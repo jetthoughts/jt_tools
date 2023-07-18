@@ -59,7 +59,7 @@ say '=> Adds service client API gems'
 
 gem_group :test do
   gem 'simplecov', require: false, group: :test
-  gem 'codecov', require: false, group: :test
+  gem 'simplecov-cobertura', require: false, group: :test
   gem 'rexml', require: false, group: :test # for hot fix of webdrivers and ruby 3
 end
 
